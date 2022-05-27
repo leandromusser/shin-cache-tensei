@@ -33,7 +33,7 @@ namespace ShinCacheTensei
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ShinCacheTensei", Version = "v1" });
             });
-            services.Configure<RouteOptions>(c => { c.LowercaseUrls = true; c.LowercaseQueryStrings = true; });
+            services.Configure<RouteOptions>(ro => { ro.LowercaseUrls = true; ro.LowercaseQueryStrings = true; });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
