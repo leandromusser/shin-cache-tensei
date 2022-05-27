@@ -10,6 +10,7 @@ namespace ShinCacheTensei.Models
         public int Level { get; set; }
 
         public RecruitingMethod RecruitingMethod { get; set; }
-        public List<Skill> Skills { get; set; }
+
+        public List<DemonSkill> DemonSkills { get; set; }
     }
 }
