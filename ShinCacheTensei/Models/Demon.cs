@@ -1,10 +1,13 @@
-using System;
 using System.Collections.Generic;
 
 namespace ShinCacheTensei.Models
 {
-    public class Demon: CommonEntity
+    public class Demon
     {
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+
         public string Race { get; set; }
 
         public int Level { get; set; }
