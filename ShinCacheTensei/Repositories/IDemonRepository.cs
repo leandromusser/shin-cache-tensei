@@ -1,6 +1,7 @@
 ﻿namespace ShinCacheTensei.Repositories
 {
-    public interface Interface
+    public interface IDemonRepository
     {
+        
     }
 }

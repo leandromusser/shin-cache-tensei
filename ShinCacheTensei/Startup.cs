@@ -8,6 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using ShinCacheTensei.Repositories;
+using ShinCacheTensei.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +30,10 @@ namespace ShinCacheTensei
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMemoryCache();
+
+            services.AddScoped<DemonsCacheService>();
+            services.AddScoped<IDemonRepository, DemonRepository>();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
