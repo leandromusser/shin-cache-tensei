@@ -45,6 +45,10 @@ namespace ShinCacheTensei
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ShinCacheTensei v1"));
             }
+            
+            
+            //app.UseCors();
+
 
             app.UseDefaultFiles();
             app.UseStaticFiles();

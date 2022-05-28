@@ -13,17 +13,17 @@ namespace ShinCacheTensei.Controllers
     [Route("[controller]")]
     public class DemonsController : ControllerBase
     {
-        private readonly MemoryCache _MemoryCache;
-        public DemonsController(MemoryCache memoryCache) {
-            _MemoryCache.CreateEntry(4).Value = "Valor";
-            _MemoryCache = memoryCache;
+        private readonly IMemoryCache MemoryCache;
+        public DemonsController(IMemoryCache memoryCache) {
+            //MemoryCache.CreateEntry(4).Value = "Valor";
+            MemoryCache = memoryCache;
         }
 
         [HttpGet]
-        public IEnumerable<int> GetSomething()
+        public async Task<IActionResult> GetSomething()
         {
-            _MemoryCache.TryGetValue(4, out var result);
-            return Enumerable.Range(0, 5);
+            MemoryCache.TryGetValue(4, out var result);
+            return Ok(Enumerable.Range(0, 5));
         }
     }
 }
