@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 //using System.Runtime.Caching;
 using Microsoft.Extensions.Caching.Memory;
+using ShinCacheTensei.Repositories;
 
 namespace ShinCacheTensei.Controllers
 {
@@ -13,16 +14,16 @@ namespace ShinCacheTensei.Controllers
     [Route("[controller]")]
     public class DemonsController : ControllerBase
     {
-        private readonly IMemoryCache MemoryCache;
-        public DemonsController(IMemoryCache memoryCache) {
+        private readonly IDemonRepository DemonRepository;
+        public DemonsController(IDemonRepository demonRepository) {
             //MemoryCache.CreateEntry(4).Value = "Valor";
-            MemoryCache = memoryCache;
+            DemonRepository = demonRepository;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetSomething()
         {
-            MemoryCache.TryGetValue(4, out var result);
+            //MemoryCache.TryGetValue(4, out var result);
             return Ok(Enumerable.Range(0, 5));
         }
     }
