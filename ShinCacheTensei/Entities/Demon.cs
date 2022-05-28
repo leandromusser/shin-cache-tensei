@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace ShinCacheTensei.Models
+namespace ShinCacheTensei.Entities
 {
     public class Demon
     {

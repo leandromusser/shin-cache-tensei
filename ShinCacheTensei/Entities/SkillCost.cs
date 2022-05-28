@@ -1,4 +1,4 @@
-﻿namespace ShinCacheTensei.Models
+﻿namespace ShinCacheTensei.Entities
 {
     public class SkillCost
     {
