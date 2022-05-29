@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ShinCacheTensei.Data.Caching;
+using ShinCacheTensei.Services;
 
 namespace ShinCacheTensei
 {
@@ -31,8 +32,9 @@ namespace ShinCacheTensei
         {
             services.AddMemoryCache();
 
-            services.AddScoped<IDemonsCache, DemonsCache>();
+            services.AddScoped<IDemonCache, DemonCache>();
             services.AddScoped<IDemonRepository, DemonRepository>();
+            services.AddScoped<IDemonService, CacheableDemonService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

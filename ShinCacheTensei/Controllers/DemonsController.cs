@@ -6,7 +6,8 @@ using System.Linq;
 using System.Threading.Tasks;
 //using System.Runtime.Caching;
 using Microsoft.Extensions.Caching.Memory;
-using ShinCacheTensei.Repositories;
+using ShinCacheTensei.Data.Repositories;
+using ShinCacheTensei.Services;
 
 namespace ShinCacheTensei.Controllers
 {
@@ -14,10 +15,10 @@ namespace ShinCacheTensei.Controllers
     [Route("[controller]")]
     public class DemonsController : ControllerBase
     {
-        private readonly IDemonRepository DemonRepository;
-        public DemonsController(IDemonRepository demonRepository) {
+        private readonly IDemonService _demonService;
+        public DemonsController(IDemonService demonService) {
             //MemoryCache.CreateEntry(4).Value = "Valor";
-            DemonRepository = demonRepository;
+            _demonService = demonService;
         }
 
         [HttpGet]
