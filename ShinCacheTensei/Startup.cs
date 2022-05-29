@@ -8,12 +8,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using ShinCacheTensei.Repositories;
-using ShinCacheTensei.Services;
+using ShinCacheTensei.Data.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ShinCacheTensei.Data.Caching;
 
 namespace ShinCacheTensei
 {
@@ -31,7 +31,7 @@ namespace ShinCacheTensei
         {
             services.AddMemoryCache();
 
-            services.AddScoped<IDemonsCacheService, DemonsCacheService>();
+            services.AddScoped<IDemonsCache, DemonsCache>();
             services.AddScoped<IDemonRepository, DemonRepository>();
 
             services.AddControllers();
