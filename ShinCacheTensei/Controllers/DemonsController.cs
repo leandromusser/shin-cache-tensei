@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
 using ShinCacheTensei.Data.Repositories;
 using ShinCacheTensei.Services;
+using Microsoft.AspNetCore.Http;
 
 namespace ShinCacheTensei.Controllers
 {
@@ -24,8 +25,16 @@ namespace ShinCacheTensei.Controllers
         [HttpGet]
         public async Task<IActionResult> GetSomething()
         {
+            IDemonDtoTESTE<int> t = new DemonDtoTESTEIMPL1();
+            //System.Convert.ChangeType(t, t.GetType());
+
+
             //MemoryCache.TryGetValue(4, out var result);
-            return Ok(Enumerable.Range(0, 5));
+            //StatusCode(500);
+            //return Ok(t);
+            //return StatusCode(201, t);
+            return Problem("detalhe");
+            return BadRequest(t);
         }
     }
 }

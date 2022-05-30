@@ -1,15 +1,31 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
 using ShinCacheTensei.Entities;
+using System;
 
 namespace ShinCacheTensei.Data.Caching
 {
-    public class DemonCache : IDemonCache
+    public class CacheHandler : ICacheHandler
     {
         public readonly IMemoryCache _memoryCache;
-        public DemonCache(IMemoryCache memoryCache)
+        public CacheHandler(IMemoryCache memoryCache)
         {
             _memoryCache = memoryCache;
         }
+
+        public bool TryGetValue(object key, out object value) => _memoryCache.TryGetValue(key, out value);
+        public bool AddDurable(object key, object value) {
+
+            DateTime dt = new DateTime();
+            DateTime.UtcNow.AddDays(1);
+            //DateTimeOffset.
+
+            _memoryCache.CreateEntry(key).AbsoluteExpiration
+            return false;
+
+        }
+
+
+        _memoryCache.Set(key, demon) == null;
 
         //public TryObtainDemonWithName(object key, out Demon demon)
         public bool TryObtainDemon(object key, out Demon demon) => _memoryCache.TryGetValue(key, out demon);
