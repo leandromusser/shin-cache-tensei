@@ -5,6 +5,6 @@ namespace ShinCacheTensei.Data.Caching
 {
     public interface IDemonCache
     {
-        public bool TryObtainDemonFromCache(object key, out Demon demon);
+        public bool TryObtainDemon(object key, out Demon demon);
     }
 }

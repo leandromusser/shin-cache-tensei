@@ -11,7 +11,7 @@ namespace ShinCacheTensei.Data.Caching
             MemoryCache = memoryCache;
         }
 
-        public bool TryObtainDemonFromCache(object key, out Demon demon)
+        public bool TryObtainDemon(object key, out Demon demon)
         {
             MemoryCache.Set(key, key);
             
