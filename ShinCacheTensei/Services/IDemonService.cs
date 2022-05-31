@@ -1,7 +1,11 @@
-﻿namespace ShinCacheTensei.Services
+﻿using ShinCacheTensei.Entities;
+
+namespace ShinCacheTensei.Services
 {
-    public class IDemonService
+    public interface IDemonService
     {
-        
+        public void AddToCacheTemp(int id);
+
+        public bool TryGetDemonById(int id, out object demon);
     }
 }

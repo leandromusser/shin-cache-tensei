@@ -12,27 +12,24 @@ namespace ShinCacheTensei.Data.Caching
             _memoryCache = memoryCache;
         }
 
-        public bool TryGetValue(object key, out object value) => _memoryCache.TryGetValue(key, out value);
-        public bool AddDurable(object key, object value) {
-
-            DateTime dt = new DateTime();
-            DateTime.UtcNow.AddDays(1);
-            //DateTimeOffset.
-
-            _memoryCache.CreateEntry(key).AbsoluteExpiration
-            return false;
-
+        public bool TryGetValue(object key, out object value) { 
+            return _memoryCache.TryGetValue(key, out value);
         }
 
+        public void AddDurable(object key, object value) {
 
-        _memoryCache.Set(key, demon) == null;
+            //Obter valor da duração do arquivo de configuração para não ficar algo Hard Coded
+            using (var entry = _memoryCache.CreateEntry(key)) {
+                entry.Value = value;
+                entry.SetValue(value);
+                //entry.SetAbsoluteExpiration(DateTimeOffset.UtcNow.AddSeconds(5));
+            }
+        }
 
-        //public TryObtainDemonWithName(object key, out Demon demon)
-        public bool TryObtainDemon(object key, out Demon demon) => _memoryCache.TryGetValue(key, out demon);
-        public bool AddDemon(object key, Demon demon) => _memoryCache.Set(key, demon) == null;
         public bool Teste() {
-            _memoryCache.GetOrCreate("DSADAS", (p) => p);
-            _memoryCache.CreateEntry("DSADSA").pr
+            return false;
+            //_memoryCache.GetOrCreate("DSADAS", (p) => p);
+            //_memoryCache.CreateEntry("DSADSA").pr
 
                 //no serviço, pegar o tempo de expiração do cache por arquivo de configuração
                 //Com o CreaqteEntry, eu tenho muito mais controle de tudo o  que eu insiro lá e posso guardar os valores antes de inserir pra passar pra um DaoCache

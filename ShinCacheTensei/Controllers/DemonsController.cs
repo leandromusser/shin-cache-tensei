@@ -9,6 +9,7 @@ using Microsoft.Extensions.Caching.Memory;
 using ShinCacheTensei.Data.Repositories;
 using ShinCacheTensei.Services;
 using Microsoft.AspNetCore.Http;
+using ShinCacheTensei.Entities;
 
 namespace ShinCacheTensei.Controllers
 {
@@ -23,9 +24,9 @@ namespace ShinCacheTensei.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetSomething()
+        public IActionResult GetSomething()
         {
-            IDemonDtoTESTE<int> t = new DemonDtoTESTEIMPL1();
+            //IDemonDtoTESTE<int> t = new DemonDtoTESTEIMPL1();
             //System.Convert.ChangeType(t, t.GetType());
 
 
@@ -33,8 +34,23 @@ namespace ShinCacheTensei.Controllers
             //StatusCode(500);
             //return Ok(t);
             //return StatusCode(201, t);
-            return Problem("detalhe");
-            return BadRequest(t);
+            //return Problem("detalhe");
+            return BadRequest("teste");
+        }
+
+        [HttpGet]
+        [Route("testcache")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult GetFromCacheTestEndPoint(int id)
+        {
+            if (_demonService.TryGetDemonById(id, out object demon))
+                return Ok(demon);
+
+            //Só para testes
+            _demonService.AddToCacheTemp(id);
+
+            return NotFound();
         }
     }
 }

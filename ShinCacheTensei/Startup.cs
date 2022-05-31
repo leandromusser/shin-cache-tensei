@@ -32,7 +32,7 @@ namespace ShinCacheTensei
         {
             services.AddMemoryCache();
 
-            services.AddScoped<IDemonCache, DemonCache>();
+            services.AddScoped<ICacheHandler, CacheHandler>();
             services.AddScoped<IDemonRepository, DemonRepository>();
             services.AddScoped<IDemonService, CacheableDemonService>();
 
