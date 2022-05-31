@@ -10,6 +10,7 @@ using ShinCacheTensei.Data.Repositories;
 using ShinCacheTensei.Services;
 using Microsoft.AspNetCore.Http;
 using ShinCacheTensei.Entities;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace ShinCacheTensei.Controllers
 {
@@ -39,16 +40,31 @@ namespace ShinCacheTensei.Controllers
         }
 
         [HttpGet]
-        [Route("testcache")]
+        [Route("search")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult GetFromCacheTestEndPoint(int id)
+        [SwaggerOperation(Summary = "APENAS TESTE: Busca no cache por todos os demons com os ids passados. Caso não sejam encontrados lá, são criados e encontrados em " +
+            "chamadas posteriores.")]
+        public IActionResult GetFromCacheTestEndPoint([FromQuery] int[] id)
         {
-            if (_demonService.TryGetDemonById(id, out object demon))
-                return Ok(demon);
+            //ESSA LÓGICA TEM QUE FICAR NO SERVICE, POIS SERIAM VÁRIAS CHAMADAS AO BD DESSA FORMA!
+            //EU TENHO QUE PASSAR O VETOR PARA O SERVICE, AÍ LÁ ELE FAZ A LÓGICA NECESSÁRIA
+            //NÃO ESQUECER O STATUS DE BADREQUEST PRA CASO OS QUERY PARAMS SEJAM OMITIDOS
 
-            //Só para testes
-            _demonService.AddToCacheTemp(id);
+            var demonList = new List<Demon>();
+            foreach (int _id in id) {
+                if (_demonService.TryGetDemonById(_id, out object demon))
+                {
+                    demonList.Add((Demon)demon);
+                }
+                else {
+                    //SÓ PARA TESTES!!! Adiciona no cache todos os demons ficticios não encontrados no cache
+                    //Inicialmente, um GET para /demons/search?id=4&id=5 retornaria 404. Chamadas posteriores retornam ambos do cache.
+                    _demonService.AddToCacheTemp(_id);
+                }
+            }
+            if(demonList.Count > 0)
+                return Ok(demonList);
 
             return NotFound();
         }

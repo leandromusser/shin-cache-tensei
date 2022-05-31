@@ -40,6 +40,7 @@ namespace ShinCacheTensei
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ShinCacheTensei", Version = "v1" });
+                c.EnableAnnotations();
             });
             services.Configure<RouteOptions>(ro => { ro.LowercaseUrls = true; ro.LowercaseQueryStrings = true; });
         }

@@ -20,6 +20,7 @@ namespace ShinCacheTensei.Services
             var d = new Demon();
             d.Name = "Leandro";
             d.Race = "Warrior";
+            d.Id = id;
             _cacheHandler.AddDurable(id, d);
         }
 
