@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
 using ShinCacheTensei.Entities;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ShinCacheTensei.Data.Repositories
 {
@@ -12,9 +14,24 @@ namespace ShinCacheTensei.Data.Repositories
             _memoryCache = memoryCache;
         }
 
-        public bool Get(object key, out object value)
+        public bool GetByKey(object key, out object value)
         {
             return _memoryCache.TryGetValue(key, out value);
+        }
+
+        public bool GetByKeys(object[] keys, out IEnumerable<object> values) {
+
+            values = new List<object>();
+            var tempValue = values;
+
+            keys.ToList().ForEach(k =>
+            {
+                if (_memoryCache.TryGetValue(k, out object tempObj))
+                    tempValue.ToList().Add(tempObj);
+            });
+            values = tempValue;
+
+            return values.Any();
         }
 
         public void AddDurable(object key, object value)
