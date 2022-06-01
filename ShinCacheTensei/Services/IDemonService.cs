@@ -6,6 +6,6 @@ namespace ShinCacheTensei.Services
     {
         public void AddToCacheTemp(int id);
 
-        public bool TryGetDemonById(int id, out object demon);
+        public bool GetById(int id, out Demon demon);
     }
 }

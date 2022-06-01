@@ -53,9 +53,9 @@ namespace ShinCacheTensei.Controllers
 
             var demonList = new List<Demon>();
             foreach (int _id in id) {
-                if (_demonService.TryGetDemonById(_id, out object demon))
+                if (_demonService.GetById(_id, out Demon demon))
                 {
-                    demonList.Add((Demon)demon);
+                    demonList.Add(demon);
                 }
                 else {
                     //SÓ PARA TESTES!!! Adiciona no cache todos os demons ficticios não encontrados no cache

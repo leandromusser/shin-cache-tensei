@@ -1,12 +1,12 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
 using ShinCacheTensei.Entities;
 
-namespace ShinCacheTensei.Data.Caching
+namespace ShinCacheTensei.Data.Repositories
 {
-    public interface ICacheHandler
+    public interface ICacheRepository
     {
 
-        public bool TryGetValue(object key, out object value);
+        public bool Get(object key, out object value);
         public void AddDurable(object key, object value);
 
     }
