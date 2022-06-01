@@ -26,8 +26,12 @@ namespace ShinCacheTensei.Services
             _cacheHandler.AddDurable(id, d);
         }
 
+        public void AddToCache(IEnumerable<Demon> demons) {
+            demons.ToList().ForEach(d => _cacheHandler.AddDurable(d.Id, d));
+        }
+
         public bool GetById(int id, out Demon demon) {
-            if (_cacheHandler.Get(id, out object obj_demon))
+            if (_cacheHandler.GetByKey(id, out object obj_demon))
             {
                 demon = (Demon) obj_demon;
                 return true;
@@ -38,12 +42,21 @@ namespace ShinCacheTensei.Services
         public bool GetByIds(int[] ids, out IEnumerable<Demon> demons)
         {
 
+            //Teste
+            ids.ToList().ForEach(id =>
+            {
 
-            var demonContext = new ShinCacheTenseiContext();
-            //Isso aqui é para ficar no repositório
-            //_demonRepository.GetByIds(id, out demons);
-            demons = demonContext.Demons.Where((d) => ids.ToList().Contains(d.Id)).AsEnumerable();
-            return demons == null;
+                var d = new Demon();
+                d.Name = "Leandro";
+                d.Race = "Warrior";
+                d.Id = id;
+                _cacheHandler.AddDurable(id, d);
+
+            });
+
+            _demonRepository.GetByIds(ids, out demons);
+
+            return demons.Any();
         }
     }
 }

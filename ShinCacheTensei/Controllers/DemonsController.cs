@@ -45,12 +45,15 @@ namespace ShinCacheTensei.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [SwaggerOperation(Summary = "APENAS TESTE: Busca no cache por todos os demons com os ids passados. Caso não sejam encontrados lá, são criados e encontrados em " +
             "chamadas posteriores.")]
-        public IActionResult GetFromCacheTestEndPoint([FromQuery] int[] id)
+        public IActionResult GetFromCacheTestEndPoint([FromQuery(Name = "id")] int[] ids)
         {
+            _demonService.GetByIds(ids, out IEnumerable<Demon> demons);
+            return Ok(demons);
+
             //ESSA LÓGICA TEM QUE FICAR NO SERVICE, POIS SERIAM VÁRIAS CHAMADAS AO BD DESSA FORMA!
             //EU TENHO QUE PASSAR O VETOR PARA O SERVICE, AÍ LÁ ELE FAZ A LÓGICA NECESSÁRIA
             //NÃO ESQUECER O STATUS DE BADREQUEST PRA CASO OS QUERY PARAMS SEJAM OMITIDOS
-
+            /*
             var demonList = new List<Demon>();
             foreach (int _id in id) {
                 if (_demonService.GetById(_id, out Demon demon))
@@ -66,7 +69,7 @@ namespace ShinCacheTensei.Controllers
             if(demonList.Count > 0)
                 return Ok(demonList);
 
-            return NotFound();
+            return NotFound();*/
         }
     }
 }
