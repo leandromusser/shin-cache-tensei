@@ -34,8 +34,8 @@ namespace ShinCacheTensei.Data.Repositories
 
         public bool GetByIds(int[] ids, out IEnumerable<Demon> demons)
         {
-            demons = _shinCacheTenseiContext.Demons.Where((d) => ids.ToList().Contains(d.Id)).AsEnumerable();
-            return demons == null;
+            demons = _shinCacheTenseiContext.Demons.Where((demon) => ids.ToList().Contains(demon.Id)).AsEnumerable();
+            return demons.Any();
         }
     }
 }
