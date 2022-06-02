@@ -1,10 +1,9 @@
 ﻿namespace ShinCacheTensei.Entities
 {
-    public class Skill
+    //Reflects, Absorbs, etc.
+    public class AffinityType
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
-        public SkillCost Cost { get; set; }
     }
 }

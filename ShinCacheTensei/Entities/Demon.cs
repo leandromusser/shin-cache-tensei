@@ -10,10 +10,19 @@ namespace ShinCacheTensei.Entities
 
         public string Race { get; set; }
 
-        public int Level { get; set; }
+        public int InitialLevel { get; set; }
+
+        public int HP { get; set; }
+        public int MP { get; set; }
+
+        public int STR { get; set; }
+        public int MAG { get; set; }
+        public int VIT { get; set; }
+        public int AGI { get; set; }
+        public int LCK { get; set; }
 
         public RecruitingMethod RecruitingMethod { get; set; }
+        public ICollection<DemonSkill> DemonSkills { get; set; }
 
-        public List<DemonSkill> DemonSkills { get; set; }
     }
 }

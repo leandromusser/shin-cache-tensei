@@ -2,8 +2,8 @@
 {
     public class DemonSkill
     {
-        public int Id { get; set; }
-        public int UnlockLevel;
-        public Skill Skill;
+        public Demon Demon { get; set; }
+        public int UnlockLevel { get; set; }
+        public Skill Skill { get; set; }
     }
 }
