@@ -47,29 +47,9 @@ namespace ShinCacheTensei.Controllers
             "chamadas posteriores.")]
         public IActionResult GetFromCacheTestEndPoint([FromQuery(Name = "id")] int[] ids)
         {
-            _demonService.GetByIds(ids, out IEnumerable<Demon> demons);
-            return Ok(demons);
-
-            //ESSA LÓGICA TEM QUE FICAR NO SERVICE, POIS SERIAM VÁRIAS CHAMADAS AO BD DESSA FORMA!
-            //EU TENHO QUE PASSAR O VETOR PARA O SERVICE, AÍ LÁ ELE FAZ A LÓGICA NECESSÁRIA
-            //NÃO ESQUECER O STATUS DE BADREQUEST PRA CASO OS QUERY PARAMS SEJAM OMITIDOS
-            /*
-            var demonList = new List<Demon>();
-            foreach (int _id in id) {
-                if (_demonService.GetById(_id, out Demon demon))
-                {
-                    demonList.Add(demon);
-                }
-                else {
-                    //SÓ PARA TESTES!!! Adiciona no cache todos os demons ficticios não encontrados no cache
-                    //Inicialmente, um GET para /demons/search?id=4&id=5 retornaria 404. Chamadas posteriores retornam ambos do cache.
-                    _demonService.AddToCacheTemp(_id);
-                }
-            }
-            if(demonList.Count > 0)
-                return Ok(demonList);
-
-            return NotFound();*/
+            if(_demonService.GetByIds(ids, out IEnumerable<Demon> demons))
+                return Ok(demons);
+            return NotFound();
         }
     }
 }
