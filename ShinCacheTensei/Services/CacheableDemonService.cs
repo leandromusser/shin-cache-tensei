@@ -21,7 +21,9 @@ namespace ShinCacheTensei.Services
         {
             var d = new Demon();
             d.Name = "Leandro";
-            d.Race = "Warrior";
+            var r = new DemonRace();
+            r.Name = "Warrior";
+            d.Race = r;
             d.Id = id;
             _cacheHandler.AddDurable(id, d);
         }
@@ -49,8 +51,11 @@ namespace ShinCacheTensei.Services
 
                 var d = new Demon();
                 d.Name = "Leandro";
-                d.Race = "Warrior";
+                var r = new DemonRace();
+                r.Name = "Warrior";
+                d.Race = r;
                 d.Id = id;
+
                 _cacheHandler.AddDurable(id, d);
 
             });

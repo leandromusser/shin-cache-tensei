@@ -9,7 +9,7 @@ namespace ShinCacheTensei.Entities
 
         public string Name { get; set; }
 
-        public string Race { get; set; }
+        public DemonRace Race { get; set; }
 
         public int InitialLevel { get; set; }
 

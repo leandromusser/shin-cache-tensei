@@ -8,6 +8,7 @@ namespace ShinCacheTensei.Data
     {
         public DbSet<AffinityType> AffinityTypes { get; set; }
         public DbSet<Demon> Demons { get; set; }
+        public DbSet<DemonRace> DemonRaces { get; set; }
         public DbSet<DemonAffinity> DemonAffinities { get; set; }
         public DbSet<DemonInitialSkill> DemonInitialSkills { get; set; }
         public DbSet<Nature> Natures { get; set; }
@@ -27,7 +28,12 @@ namespace ShinCacheTensei.Data
             modelBuilder.Entity<DemonInitialSkill>().HasKey(l => new { l.DemonId, l.SkillId});
             modelBuilder.Entity<DemonAffinity>().HasKey(l => new { l.DemonId, l.NatureId, l.AffinityTypeId });
 
-            
+            var d = new Demon();
+            d.Name = "Leandro";
+            d.Id = 5;
+            d.InitialLevel = 600;
+            modelBuilder.Entity<Demon>().HasData(d);
+
 
             //modelBuilder.Entity<DemonAffinity>().HasKey(k => k.Demon.Id);
 
