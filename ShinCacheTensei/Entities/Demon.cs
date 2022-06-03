@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ShinCacheTensei.Entities
 {
@@ -22,7 +23,8 @@ namespace ShinCacheTensei.Entities
         public int LCK { get; set; }
 
         public RecruitingMethod RecruitingMethod { get; set; }
-        public ICollection<DemonSkill> DemonSkills { get; set; }
+        public ICollection<DemonInitialSkill> DemonInitialSkills { get; set; }
+        public ICollection<DemonAffinity> DemonAffinities { get; set; }
 
     }
 }
