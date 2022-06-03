@@ -27,6 +27,8 @@ namespace ShinCacheTensei.Data
             modelBuilder.Entity<DemonInitialSkill>().HasKey(l => new { l.DemonId, l.SkillId});
             modelBuilder.Entity<DemonAffinity>().HasKey(l => new { l.DemonId, l.NatureId, l.AffinityTypeId });
 
+            
+
             //modelBuilder.Entity<DemonAffinity>().HasKey(k => k.Demon.Id);
 
             //modelBuilder.Entity<DemonAffinity>().OwnsOne<Demon>(x => x.Demon);

@@ -47,7 +47,9 @@ namespace ShinCacheTensei.Controllers
             "chamadas posteriores.")]
         public IActionResult GetFromCacheTestEndPoint([FromQuery(Name = "id")] int[] ids)
         {
-            if(_demonService.GetByIds(ids, out IEnumerable<Demon> demons))
+            _demonService.GetById(ids[0], out Demon demon);
+            return Ok(demon);
+            if (_demonService.GetByIds(ids, out IEnumerable<Demon> demons))
                 return Ok(demons);
             return NotFound();
         }

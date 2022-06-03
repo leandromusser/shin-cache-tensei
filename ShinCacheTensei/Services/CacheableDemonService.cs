@@ -30,12 +30,13 @@ namespace ShinCacheTensei.Services
             demons.ToList().ForEach(d => _cacheHandler.AddDurable(d.Id, d));
         }
 
-        public bool GetById(int id, out Demon demon) {
+        public bool GetById(int id, out Demon demon) {/*
             if (_cacheHandler.GetByKey(id, out object obj_demon))
             {
                 demon = (Demon) obj_demon;
                 return true;
-            }
+            }*/
+            
             return _demonRepository.GetById(id, out demon);
         }
 
