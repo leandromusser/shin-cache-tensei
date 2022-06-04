@@ -5,6 +5,7 @@ namespace ShinCacheTensei.Entities
 {
     public class Demon
     {
+
         public int Id { get; set; }
 
         public string Name { get; set; }
@@ -13,14 +14,14 @@ namespace ShinCacheTensei.Entities
 
         public int InitialLevel { get; set; }
 
-        public int HP { get; set; }
-        public int MP { get; set; }
-
-        public int STR { get; set; }
-        public int MAG { get; set; }
-        public int VIT { get; set; }
-        public int AGI { get; set; }
-        public int LCK { get; set; }
+        //Transformar esses stats em um objeto de valor?
+        public int InitialHp { get; set; }
+        public int InitialMp { get; set; }
+        public int InitialStr { get; set; }
+        public int InitialMag { get; set; }
+        public int InitialVit { get; set; }
+        public int InitialAgi { get; set; }
+        public int InitialLck { get; set; }
 
         public RecruitingMethod RecruitingMethod { get; set; }
         public ICollection<DemonInitialSkill> DemonInitialSkills { get; set; }
