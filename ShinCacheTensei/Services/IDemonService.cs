@@ -1,4 +1,5 @@
-﻿using ShinCacheTensei.Entities;
+﻿using ShinCacheTensei.Data;
+using ShinCacheTensei.Entities;
 using System.Collections.Generic;
 
 namespace ShinCacheTensei.Services
@@ -7,6 +8,6 @@ namespace ShinCacheTensei.Services
     {
         public void AddToCacheTemp(int id);
         public bool GetById(int id, out Demon demon);
-        public bool GetByIds(int[] ids, out IEnumerable<Demon> demons);
+        public bool GetByIds(int[] ids, out IEnumerable<DemonDto> demonDtos);
     }
 }
