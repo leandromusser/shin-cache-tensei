@@ -11,6 +11,7 @@ using ShinCacheTensei.Services;
 using Microsoft.AspNetCore.Http;
 using ShinCacheTensei.Entities;
 using Swashbuckle.AspNetCore.Annotations;
+using ShinCacheTensei.Data;
 
 namespace ShinCacheTensei.Controllers
 {
@@ -25,22 +26,7 @@ namespace ShinCacheTensei.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetSomething()
-        {
-            //IDemonDtoTESTE<int> t = new DemonDtoTESTEIMPL1();
-            //System.Convert.ChangeType(t, t.GetType());
-
-
-            //MemoryCache.TryGetValue(4, out var result);
-            //StatusCode(500);
-            //return Ok(t);
-            //return StatusCode(201, t);
-            //return Problem("detalhe");
-            return BadRequest("teste");
-        }
-
-        [HttpGet]
-        [Route("search")]
+        [Route("searchC")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [SwaggerOperation(Summary = "APENAS TESTE: Busca no cache por todos os demons com os ids passados. Caso não sejam encontrados lá, são criados e encontrados em " +
@@ -49,9 +35,23 @@ namespace ShinCacheTensei.Controllers
         {
             _demonService.GetById(ids[0], out Demon demon);
             return Ok(demon);
-            if (_demonService.GetByIds(ids, out IEnumerable<Demon> demons))
-                return Ok(demons);
+            if (_demonService.GetByIds(ids, out IEnumerable<DemonDto> demonDtos))
+                return Ok(demonDtos);
             return NotFound();
         }
+
+        [HttpGet]
+        [Route("search")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [SwaggerOperation(Summary = "Retorna todas as informações dos Demons com os ids solicitados.")]
+        public IActionResult GetDemons([FromQuery(Name = "id")] int[] ids)
+        {
+            if (_demonService.GetByIds(ids, out IEnumerable<DemonDto> demonDtos))
+                return Ok(demonDtos);
+            return NotFound();
+        }
+
+
     }
 }
