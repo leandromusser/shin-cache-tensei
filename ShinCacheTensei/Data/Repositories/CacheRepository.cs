@@ -38,18 +38,18 @@ namespace ShinCacheTensei.Data.Repositories
             return values.Any();
         }
 
-        public void AddDurable(object key, object value)
+        public void AddDurableValue(object key, object value)
         {
-
-            //Obter valor da duração do arquivo de configuração para não ficar algo Hard Coded
-            var DurationInSecondsOfItemInDurableCache = _configuration.GetValue<double>("DurationInSecondsOfItemInDurableCache");
+            var SlidingExpirationInSecondsOfDurableCacheValue = _configuration.GetValue<double>("SlidingExpirationInSecondsOfDurableCacheValue");
+            var AbsoluteExpirationInSecondsOfDurableCacheValue = _configuration.GetValue<double>("AbsoluteExpirationInSecondsOfDurableCacheValue");
             using (var entry = _memoryCache.CreateEntry(key))
             {
                 entry.Value = value;
                 entry.SetValue(value);
-                entry.SetAbsoluteExpiration(DateTimeOffset.UtcNow.AddSeconds(DurationInSecondsOfItemInDurableCache));
+                entry.SetAbsoluteExpiration(DateTimeOffset.UtcNow.AddSeconds(AbsoluteExpirationInSecondsOfDurableCacheValue));
+                entry.SetSlidingExpiration(DateTimeOffset.UtcNow.AddSeconds(SlidingExpirationInSecondsOfDurableCacheValue) - DateTimeOffset.UtcNow); 
             }
         }
+
     }
-    
 }
