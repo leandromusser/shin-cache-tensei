@@ -36,6 +36,7 @@ namespace ShinCacheTensei
             services.AddScoped<IDemonRepository, DemonRepository>();
             services.AddScoped<IDemonService, CacheableDemonService>();
             services.AddScoped<ShinCacheTenseiContext>();
+            services.AddSingleton<IConfiguration>(Configuration);
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

@@ -2,7 +2,7 @@
 {
     public enum OriginType
     {
-        ServerSideCache,
-        Database
+        ServerSideCache = 1,
+        Database = 2
     }
 }

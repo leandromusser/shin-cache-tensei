@@ -17,16 +17,6 @@ namespace ShinCacheTensei.Data.Repositories
 
         public bool GetById(int id, out Demon demon)
         {
-
-            
-            var d = new Demon();
-            d.Name = "Leandro";
-            d.InitialLevel = 600;
-            var demonContext = new ShinCacheTenseiContext();
-            demonContext.Demons.Add(d);
-            demonContext.SaveChanges();
-            
-
             demon = _shinCacheTenseiContext.Demons.Where((d) => d.Id == id).FirstOrDefault();
             return demon == null;
         }

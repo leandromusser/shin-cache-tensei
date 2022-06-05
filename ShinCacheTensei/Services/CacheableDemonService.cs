@@ -69,6 +69,7 @@ namespace ShinCacheTensei.Services
                 foreach (var demon in demons) {
                     var demonDto = new DemonDto(demon, OriginType.Database);
                     ((List<DemonDto>)demonDtos).Add(demonDto);
+                    _cacheHandler.AddDurable(demon.Id, demon);
                 }
             }
 

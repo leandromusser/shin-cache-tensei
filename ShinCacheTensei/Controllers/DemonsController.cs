@@ -28,15 +28,17 @@ namespace ShinCacheTensei.Controllers
         [Route("search")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [SwaggerOperation(Summary = "Retorna todas as informações dos Demons com os ids solicitados.")]
         public IActionResult GetDemons([FromQuery] DemonQueryParams demonQueryParams)
         {
             if (!this.ModelState.IsValid)
-                return BadRequest("Invalid parameters!");
+                return BadRequest();
 
             if (_demonService.GetByIds(demonQueryParams.Ids, out IEnumerable<DemonDto> demonDtos))
                 return Ok(demonDtos);
             return NotFound();
         }
+
     }
 }
