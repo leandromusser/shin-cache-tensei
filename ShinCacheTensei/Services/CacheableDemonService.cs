@@ -11,47 +11,44 @@ namespace ShinCacheTensei.Services
     {
         public readonly ICacheRepository _cacheHandler;
         public readonly IDemonRepository _demonRepository;
+        public readonly ICacheKeyGeneratorService _cacheKeyGeneratorService;
 
-        public CacheableDemonService(ICacheRepository cacheHandler, IDemonRepository demonRepository) {
+
+        /*
+            DESENVOLVER O CONTROLLER DA PAGINAÇÃO
+
+            AGORA OS DEMONS SÃO GUARDADOS COM AS SKILLS TAMBÉM, TUDO JUNTO. RECURSOS SEPARADOS PARA SKILLS PODERIA SER EM OUTRA VERSÃO, MAS...
+            É DESNECESSÁRIO E TOMA MUITO TEMPO PARA ALGO QUE NÃO COMPENSA TANTO.
+
+            PRECISA TAMBÉM DE UMA LISTA DINÂMICA COM LISTAGEM DOS NOMES DOS DEMONS E PAGINAÇÃO
+
+            ADICIONAR JWT PARA EDIÇÃO DE DEMONS (EXCETO IMAGEM / IP FICA REGISTRADO NO BANCO DE DADOS)
+            PODE SER CRIAÇÃO TAMBÉM, DESDE QUE SEJA POSSÍVEL O CARA FAZER REQUISIÇÃO DIRETO AO BD, ASSIM IGNORA O CACHE
+            ESSE JWT DARÁ PODER ADMINISTRATIVO AO CARA PARA EDITAR OS DEMONS, AÍ ELES SERÃO AJUSTADOS NO BD E NO CACHE
+            ROLE DO JWT: EDITOR
+
+            VER O QUE ACONTECE SE DELETAR O DEMON DO BANCO (COMO FICA NO CACHE?)
+            PARA CONSEGUIR A APIKEY: dar o nome, escolher se é recrutador, etc.
+
+            A PÁGINA COM OS IDS DOS DEMONS NÃO PODE FICAR NO CACHE POR MUITO TEMPO, POIS CASO ALGUÉM ADICIONE UM DEMON E FAÇA A MESMA...
+            ...PESQUISA, O NOVO DEMON NÃO VAI APARECER.
+         */
+
+        public CacheableDemonService(ICacheRepository cacheHandler, IDemonRepository demonRepository, ICacheKeyGeneratorService cacheKeyGeneratorService) {
             _cacheHandler = cacheHandler;
             _demonRepository = demonRepository;
-        }
-
-        public void AddToCacheTemp(int id)
-        {
-            var d = new Demon();
-            d.Name = "Leandro";
-            var r = new DemonRace();
-            r.Name = "Warrior";
-            d.Race = r;
-            d.Id = id;
-            _cacheHandler.AddDurableValue(id, d);
-        }
-
-        public void AddToCache(IEnumerable<Demon> demons) {
-            demons.ToList().ForEach(d => _cacheHandler.AddDurableValue(d.Id, d));
-        }
-
-        public bool GetById(int id, out Demon demon) {/*
-            if (_cacheHandler.GetByKey(id, out object obj_demon))
-            {
-                demon = (Demon) obj_demon;
-                return true;
-            }*/
-            
-            return _demonRepository.GetById(id, out demon);
+            _cacheKeyGeneratorService = cacheKeyGeneratorService;
         }
 
         public bool GetByIds(int[] ids, out IEnumerable<DemonDto> demonDtos)
         {
-            //Tem que ter uma lógica de validação aqui
 
             var remainingDemonIds = new List<int>();
             demonDtos = new List<DemonDto>(){};
 
             foreach (int id in ids) {
 
-                _cacheHandler.GetByKey(id, out object demon);
+                _cacheHandler.GetByKey(_cacheKeyGeneratorService.GetDemonKey(id), out object demon);
                 if (demon == null)
                 {
                     remainingDemonIds.Add(id);
@@ -69,7 +66,7 @@ namespace ShinCacheTensei.Services
                 foreach (var demon in demons) {
                     var demonDto = new DemonDto(demon, OriginType.Database);
                     ((List<DemonDto>)demonDtos).Add(demonDto);
-                    _cacheHandler.AddDurableValue(demon.Id, demon);
+                    _cacheHandler.AddDurableValue(_cacheKeyGeneratorService.GetDemonKey(demon.Id), demon);
                 }
             }
 
