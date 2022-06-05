@@ -1,4 +1,4 @@
-﻿using ShinCacheTensei.Data;
+﻿using ShinCacheTensei.Dtos;
 using ShinCacheTensei.Entities;
 using System.Collections.Generic;
 

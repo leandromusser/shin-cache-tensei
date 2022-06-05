@@ -1,11 +1,12 @@
 ﻿using ShinCacheTensei.Entities;
+using ShinCacheTensei.Services;
 
-namespace ShinCacheTensei.Data
+namespace ShinCacheTensei.Dtos
 {
     public class DemonDto
     {
         public DemonDto()
-        {}
+        { }
 
         public DemonDto(Demon demon, OriginType cameFrom)
         {

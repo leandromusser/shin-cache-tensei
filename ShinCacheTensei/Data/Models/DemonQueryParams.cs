@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace ShinCacheTensei.Data
+namespace ShinCacheTensei.Data.Models
 {
     public class DemonQueryParams
     {

@@ -1,5 +1,5 @@
-﻿using ShinCacheTensei.Data;
-using ShinCacheTensei.Data.Repositories;
+﻿using ShinCacheTensei.Data.Repositories;
+using ShinCacheTensei.Dtos;
 using ShinCacheTensei.Entities;
 using System;
 using System.Collections.Generic;
@@ -25,11 +25,11 @@ namespace ShinCacheTensei.Services
             r.Name = "Warrior";
             d.Race = r;
             d.Id = id;
-            _cacheHandler.AddDurable(id, d);
+            _cacheHandler.AddDurableValue(id, d);
         }
 
         public void AddToCache(IEnumerable<Demon> demons) {
-            demons.ToList().ForEach(d => _cacheHandler.AddDurable(d.Id, d));
+            demons.ToList().ForEach(d => _cacheHandler.AddDurableValue(d.Id, d));
         }
 
         public bool GetById(int id, out Demon demon) {/*
@@ -69,7 +69,7 @@ namespace ShinCacheTensei.Services
                 foreach (var demon in demons) {
                     var demonDto = new DemonDto(demon, OriginType.Database);
                     ((List<DemonDto>)demonDtos).Add(demonDto);
-                    _cacheHandler.AddDurable(demon.Id, demon);
+                    _cacheHandler.AddDurableValue(demon.Id, demon);
                 }
             }
 

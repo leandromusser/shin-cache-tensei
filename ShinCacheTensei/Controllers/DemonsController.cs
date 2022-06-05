@@ -11,7 +11,8 @@ using ShinCacheTensei.Services;
 using Microsoft.AspNetCore.Http;
 using ShinCacheTensei.Entities;
 using Swashbuckle.AspNetCore.Annotations;
-using ShinCacheTensei.Data;
+using ShinCacheTensei.Data.Models;
+using ShinCacheTensei.Dtos;
 
 namespace ShinCacheTensei.Controllers
 {

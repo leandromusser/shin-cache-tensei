@@ -9,7 +9,7 @@ namespace ShinCacheTensei.Data.Repositories
 
         public bool GetByKey(object key, out object value);
         public bool GetByKeys(object[] key, out IEnumerable<object> value);
-        public void AddDurable(object key, object value);
+        public void AddDurableValue(object key, object value);
 
     }
 }
