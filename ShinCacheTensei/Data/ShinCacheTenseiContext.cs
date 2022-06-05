@@ -28,31 +28,14 @@ namespace ShinCacheTensei.Data
             modelBuilder.Entity<DemonInitialSkill>().HasKey(l => new { l.DemonId, l.SkillId});
             modelBuilder.Entity<DemonAffinity>().HasKey(l => new { l.DemonId, l.NatureId, l.AffinityTypeId });
 
-            var d = new Demon();
-            d.Name = "Leandro";
-            d.Id = 5;
-            d.InitialLevel = 600;
+            var d = new Demon
+            {
+                Name = "Leandro",
+                Id = 5,
+                InitialLevel = 600
+            };
             modelBuilder.Entity<Demon>().HasData(d);
 
-
-            //modelBuilder.Entity<DemonAffinity>().HasKey(k => k.Demon.Id);
-
-            //modelBuilder.Entity<DemonAffinity>().OwnsOne<Demon>(x => x.Demon);
-            //modelBuilder.Entity<DemonInitialSkill>().OwnsOne<Demon>(x => x.Demon).HasKey()
-
-            //modelBuilder.Entity<Demon>().Property(p => p.DemonInitialSkills).
-
-            //modelBuilder.Entity<Demon>().HasOne<Demon>(x => x).WithMany<DemonAffinity>(x => x.STR);
-
-            //modelBuilder.Entity<DemonInitialSkill>().HasKey(k => k.Demon.Id);
-
-            //modelBuilder.Entity<DemonAffinity>().HasOne<Demon>(x => x.Demon).WithMany(x => x.Id);
-
-            //modelBuilder.Entity<DemonAffinity>().HasKey(x => x.DemonId).
-
-            //Pesquisar por Value Object / Objeto de valor
-            //O Entity Framework não suporta tipos complexos, por isso vai dar erro aqui com o k.Demon.Id. Teria que ser tipo um K.DemonId
-            //modelBuilder.Entity<DemonInitialSkill>().HasKey(k => k.Demon.Id);
         }
     }
 }
