@@ -29,27 +29,37 @@ namespace ShinCacheTensei.Data
             modelBuilder.Entity<DemonInitialSkill>().HasKey(l => new { l.DemonId, l.SkillId});
             modelBuilder.Entity<DemonAffinity>().HasKey(l => new { l.DemonId, l.NatureId, l.AffinityTypeId });
 
-            modelBuilder.Entity<Demon>().OwnsOne(d => d.Race).HasData(new {DemonId = 5, Id = 5, Name = "Warrior"});
-            modelBuilder.Entity<Demon>().OwnsOne(d => d.RecruitingMethod).HasData(new { DemonId = 5, Id = 5, Description = "Fusion only" });
-
-            modelBuilder.Entity<Skill>().OwnsOne(s => s.SkillType).HasData(new { SkillId = 5, Id = 5, Type = "MP" });
-
-            modelBuilder.Entity<DemonAffinity>().OwnsOne(da => da.AffinityType).HasData(new { DemonAffinityAffinityTypeId = 5, DemonAffinityDemonId = 5, DemonAffinityNatureId = 5, DemonAffinityId = 5, Id = 5, Type = "MP" });
-            modelBuilder.Entity<DemonAffinity>().OwnsOne(da => da.Nature).HasData(new { DemonAffinityAffinityTypeId = 5, DemonAffinityDemonId = 5, DemonAffinityNatureId = 5, DemonAffinityId = 5, Id = 5, Name = "MP" });
 
 
-            var d = new Demon
+            //modelBuilder.Entity<Demon>().OwnsOne(d => d.Race).HasData(new {DemonId = 5, Id = 5, Name = "Warrior"});
+           // modelBuilder.Entity<Demon>().OwnsOne(d => d.RecruitingMethod).HasData(new { DemonId = 5, Id = 5, Description = "Fusion only" });
+
+           // modelBuilder.Entity<Skill>().OwnsOne(s => s.SkillType).HasData(new { SkillId = 5, Id = 5, Type = "MP" });
+
+           //modelBuilder.Entity<DemonAffinity>().OwnsOne(da => da.AffinityType).HasData(new { DemonAffinityAffinityTypeId = 5, DemonAffinityDemonId = 5, DemonAffinityNatureId = 5, DemonAffinityId = 5, Id = 5, Type = "MP" });
+           //modelBuilder.Entity<DemonAffinity>().OwnsOne(da => da.Nature).HasData(new { DemonAffinityAffinityTypeId = 5, DemonAffinityDemonId = 5, DemonAffinityNatureId = 5, DemonAffinityId = 5, Id = 5, Name = "MP" });
+
+
+            modelBuilder.Entity<Demon>(d =>
             {
-                Name = "Leandro",
-                Id = 5,
-                InitialLevel = 50,
-                
-            };
-            modelBuilder.Entity<Demon>().HasData(d);
+                d.HasData(new Demon
+                {
+                    Id = 5,
+                    Name = "Leandro",
+                    InitialLevel = 50
+                });
+                d.OwnsOne(dw => dw.RecruitingMethod).HasData(new
+                {
+                    DemonId = 5,
+                    Id = 3,
+                    Description = "Fusion only"
+                });
+            });
 
-            modelBuilder.Entity<DemonInitialSkill>().HasData(new { DemonId = 5, SkillId = 3, UnlockLevel = 54});
 
-            
+            //modelBuilder.Entity<DemonInitialSkill>().HasData(new { DemonId = 5, SkillId = 5, UnlockLevel = 54});
+
+
             //DemonInitialSkill[] dmi = { new DemonInitialSkill { SkillId = 3, Demon = d, DemonId = 5} };
             //d.DemonInitialSkills = dmi;
 
