@@ -30,8 +30,25 @@ namespace ShinCacheTensei.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [SwaggerOperation(Summary = "Retorna os ids dos Demons que estejam de acordo com os filtros selecionados.")]
+        public IActionResult GetDemonsIdsByFilters([FromQuery] DemonIdListQueryParams demonIdListQueryParams)
+        {
+            if (!this.ModelState.IsValid)
+                return BadRequest();
+
+            _demonService.GetIdsByFilters(demonIdListQueryParams, out int[] ids);
+
+            //if (_demonService.GetByIds(demonQueryParams.Ids, out IEnumerable<DemonDto> demonDtos))
+            return Ok(ids);
+            //return NotFound();
+        }
+
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [SwaggerOperation(Summary = "Retorna todas as informações dos Demons com os ids solicitados.")]
-        public IActionResult GetDemons([FromQuery] DemonQueryParams demonQueryParams)
+        public IActionResult GetDemonsByIds([FromQuery] DemonQueryParams demonQueryParams)
         {
             if (!this.ModelState.IsValid)
                 return BadRequest();
