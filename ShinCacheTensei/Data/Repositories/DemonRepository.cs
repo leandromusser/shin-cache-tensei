@@ -61,7 +61,10 @@ namespace ShinCacheTensei.Data.Repositories
 
         public bool GetByIds(int[] ids, out IEnumerable<Demon> demons)
         {
-            demons = _shinCacheTenseiContext.Demons.Where((demon) => ids.ToList().Contains(demon.Id)).AsEnumerable();
+            IQueryable<Demon> queryableDemons = _shinCacheTenseiContext.Demons.Include(p => p.DemonInitialSkills).ThenInclude(x => x.Skill)
+                .Where((demon) => ids.ToList().Contains(demon.Id));
+
+            demons = queryableDemons.ToList();
             return demons.Any();
         }
 
