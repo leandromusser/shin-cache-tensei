@@ -1,4 +1,5 @@
-﻿using ShinCacheTensei.Data.Repositories;
+﻿using ShinCacheTensei.Data.Models;
+using ShinCacheTensei.Data.Repositories;
 using ShinCacheTensei.Dtos;
 using ShinCacheTensei.Entities;
 using System;
@@ -71,6 +72,12 @@ namespace ShinCacheTensei.Services
             }
 
             return demonDtos.Any();
+        }
+
+        public bool GetIdsByFilters(DemonIdListQueryParams demonIdListQueryParams, out int[] ids)
+        {
+            _demonRepository.GetIdsByFilters(demonIdListQueryParams, 5, 5, out ids);
+            return true;
         }
     }
 }
