@@ -5,7 +5,7 @@ namespace ShinCacheTensei.Services
 {
     public interface ICacheKeyGeneratorService
     {
-        public string GetDemonKey(int id);
+        public string GenerateDemonKey(int id);
 
     }
 }

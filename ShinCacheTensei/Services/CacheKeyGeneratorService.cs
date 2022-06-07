@@ -5,7 +5,7 @@ namespace ShinCacheTensei.Services
 {
     public sealed class CacheKeyGeneratorService: ICacheKeyGeneratorService
     {
-        public string GetDemonKey(int id) => $"Demon: {id}";
+        public string GenerateDemonKey(int id) => $"Demon: {id}";
 
     }
 }

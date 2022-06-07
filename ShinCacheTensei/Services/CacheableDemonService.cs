@@ -49,7 +49,7 @@ namespace ShinCacheTensei.Services
 
             foreach (int id in ids) {
 
-                _cacheHandler.GetByKey(_cacheKeyGeneratorService.GetDemonKey(id), out object demon);
+                _cacheHandler.GetByKey(_cacheKeyGeneratorService.GenerateDemonKey(id), out object demon);
                 if (demon == null)
                 {
                     remainingDemonIds.Add(id);
@@ -67,7 +67,7 @@ namespace ShinCacheTensei.Services
                 foreach (var demon in demons) {
                     var demonDto = new DemonDto(demon, OriginType.Database);
                     ((List<DemonDto>)demonDtos).Add(demonDto);
-                    _cacheHandler.AddDurableValue(_cacheKeyGeneratorService.GetDemonKey(demon.Id), demon);
+                    _cacheHandler.AddDurableValue(_cacheKeyGeneratorService.GenerateDemonKey(demon.Id), demon);
                 }
             }
 
@@ -79,5 +79,6 @@ namespace ShinCacheTensei.Services
             _demonRepository.GetIdsByFilters(demonIdListQueryParams, 5, 5, out ids);
             return true;
         }
+
     }
 }
