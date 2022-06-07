@@ -37,7 +37,7 @@ namespace ShinCacheTensei.Data.Repositories
                 queryIdsss = queryIdsss.Where(d => d.InitialLevel <= demonIdListQueryParams.MaximumLevel);
 
             if (demonIdListQueryParams.DemonRaceId != null)
-                queryIdsss = queryIdsss.Where(d => d.Race.Id <= demonIdListQueryParams.DemonRaceId);
+                queryIdsss = queryIdsss.Where(d => d.Race.Id == demonIdListQueryParams.DemonRaceId);
 
             if (demonIdListQueryParams.SkillId != null)
                 queryIdsss = queryIdsss.Where(d => d.DemonInitialSkills.Any(s => s.SkillId == demonIdListQueryParams.SkillId));
