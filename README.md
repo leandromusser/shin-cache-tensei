@@ -1,16 +1,36 @@
-# ShinCacheTensei
+# [EM CONSTRUÇÃO] ShinCacheTensei
 
-O objetivo deste projeto é recriar um outro do SENAC (2017), que era inteiramente Client Side, apenas para ganhar conhecimento.
+O objetivo aqui é simplesmente ganhar conhecimento desenvolvendo do zero um projeto pessoal.
+Até o momento, destaco as seguintes tecnologias, técnicas e padrões usados: 
 
-# Futuro uso
+C#
+Linq
+ASP .NET Core 5
+CLI do .NET
+Injeção de dependência com IServiceCollection, tentando ao máximo respeitar os princípios SOLID
+Cache de memória com IMemoryCache
+Entity Framework Core 5.0
+Migrations
+Modelagem de dados
+Git
+Github
+Commit Often
+Swashbuckle | Swagger
+Visual Studio Community 2022
+Diferentes camadas, cada uma com sua responsabilidade: Controller > Service > Repository > Context
 
-O Client fará um GET para um endpoint usando parâmetros de URL com os filtros que ele quer, algo como /demons/getlist?race=Warrior&Weakness=Fire. Nesse caso, o usuário receberá uma lista de ids de demons (veja-os como versões mais obscuras de Pokémons) que sejam da raça Warrior e tenham como fraqueza Fire. Sim, ele não receberá os demons, mas sim uma lista de ids de demons que estão de acordo com os critérios de pesquisa. O tamanho da lista será perfeitamente controlado por paginação, assim como o que vem a seguir.
+# Funcionamento até o momento
 
-O Client varrerá essa lista de ids e fará mais outra requisição ao servidor, um endpoint como /demons?id=4&id=53&id=61 por exemplo.
-Dessa vez, o servidor retornará uma lista com todas as características dos demons de id 4, 53 e 61. Mas por que a primeira requisição não envia os demons de uma vez sem precisar da segunda? Porque essa é uma forma de manter as informações de cada Demon em cache Client e Server Side. O Client primeiro verificará se algum Demon com esses ids existem no cache Client Side antes de efetuar a requisição e, caso exista (o id 53 por exemplo), a requisição ao servidor ficará da seguinte forma: /demons?id=4&id=61. Lá ocorrerá a mesma coisa entre o servidor e o banco de dados.
+Existem dois endpoints: ```/demons``` e ```/demons/search```. Pense nesses Demons como se fossem Pokémons, mas de outra franquia. Inicialmente, uma requisição GET é feita para /demons/search com os critérios da pesquisa, que podem ser nome, fraqueza, skill que possui, etc. Exemplo: ```/demons/search?MinimumLevel=40&MaximumLevel=60&Quantity=5``` (retorne até 5 ids de Demons que sejam do nível 40 até o nível 50). A quantidade máxima que pode ser retornada está definida no appsettings.json, evitando de retornar tudo de uma vez.
 
-Tenho muitas outras ideias, como manter cache também da lista de ids, mas por enquanto estou construindo outras coisas.
-Repetindo, o objetivo aqui é apenas ganhar conhecimento.
+Também é possível usar paginação: ```/demons/search?MinimumLevel=40&Quantity=5&AfterId=6``` (retorne até 5 ids de Demons que sejam no mínimo do nível 40 e que, ao final de toda filtragem, pegue apenas os que estão após o Demon de id 6. A lógica é que se você fez essa mesma busca anteriormente, como por exemplo ```/demons/search?MinimumLevel=40&Quantity=5``` e foi retornado os Demons de ids 7, 2, 3, 9 e 6, caso você queira obter mais do que isso, é só usar o parâmetro AfterId como igual a 6 para buscar mais 5 após o último elemento.
 
+Mas o que eu quero dizer com ids de Demons? Esse endpoint não retorna os dados sobre os Demons, apenas seus respectivos ids, para que possam ser usado no próximo endpoint: ```/demons?id=7&id=2&id=3&id=9``` (obtenha todas as informações sobre os Demons que tenham os ids 2, 3 e 9). O máximo que pode ser retornado atualmente é 5, mas eventualmente essa configuração será movida para o appsettings.json como o do caso acima. O propósito em primeiro buscar os ids é que eu posso armazenar individualmente cada Demon em cache. Desconsiderarei qualquer cache no lado do Cliente aqui. Ao fazer um GET para esse endpoint e com esses mesmos parâmetros do exemplo acima, o servidor verificará se os demons de ids 7, 2, 3 e 9 existem em cache e, caso estejam lá, são retornados. Os que não são encontrados, são trazidos do banco de dados e, após isso, inseridos no cache. Todos os Demons retornados são "marcados" com um atributo chamado "CameFrom", que serve para indicar se o Demon veio do cache (valor 1) ou do banco de dados (valor 2). 
 
-Baseado em: https://leandro-rmc.github.io/SENAC/[Basico]_Algoritmos_e_JavaScript/smtNocturne/demons.html
+# Próximos objetivos
+
+O próximo objetivo é fazer com a lista de ids fique armazenada em cache após a requisição ao primeiro endpoint, sendo a chave o conjunto de parâmetros. Usando a mesma consulta lá de cima como exemplo: ```/demons/search?MinimumLevel=40&Quantity=5&AfterId=6```. Nesse caso, os parâmetros MinimumLevel, Quantity, AfterId e todos os outros possíveis (mesmo nulos ou vazios por não terem sido considerados nessa consulta) serão combinados para gerar um Hash OU convertidos em Strings e concatenados em uma certa ordem. Em ambos os casos, serão usados como chaves para acessar o item contendo os ids dessa consulta no cache.
+
+No fim, usarei este projeto como base para meus estudos com NUnit e CI/CD. Após essa etapa, será feito o deploy na Heroku usando o modelo de deploy com imagem Docker.
+
+Inspirado em: https://leandro-rmc.github.io/SENAC/[Basico]_Algoritmos_e_JavaScript/smtNocturne/demons.html
