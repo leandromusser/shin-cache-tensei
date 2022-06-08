@@ -3,21 +3,21 @@
 O objetivo aqui é simplesmente ganhar conhecimento desenvolvendo do zero um projeto pessoal.
 Até o momento, destaco as seguintes tecnologias, técnicas e padrões usados: 
 
-C#
-Linq
-ASP .NET Core 5
-CLI do .NET
-Injeção de dependência com IServiceCollection, tentando ao máximo respeitar os princípios SOLID
-Cache de memória com IMemoryCache
-Entity Framework Core 5.0
-Migrations
-Modelagem de dados
-Git
-Github
-Commit Often
-Swashbuckle | Swagger
-Visual Studio Community 2022
-Diferentes camadas, cada uma com sua responsabilidade: Controller > Service > Repository > Context
+- C#
+- Linq
+- ASP .NET Core 5
+- CLI do .NET
+- Injeção de dependência com IServiceCollection, tentando ao máximo respeitar os princípios SOLID
+- Cache de memória com IMemoryCache
+- Entity Framework Core 5.0
+- Migrations
+- Modelagem de dados
+- Git
+- Github
+- Commit Often
+- Swashbuckle | Swagger
+- Visual Studio Community 2022
+- Diferentes camadas, cada uma com sua responsabilidade: Controller > Service > Repository > Context
 
 # Funcionamento até o momento
 
