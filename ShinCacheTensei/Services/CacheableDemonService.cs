@@ -1,4 +1,5 @@
-﻿using ShinCacheTensei.Data.Models;
+﻿using Microsoft.Extensions.Configuration;
+using ShinCacheTensei.Data.Models;
 using ShinCacheTensei.Data.Repositories;
 using ShinCacheTensei.Dtos;
 using ShinCacheTensei.Entities;
@@ -13,9 +14,10 @@ namespace ShinCacheTensei.Services
         public readonly ICacheRepository _cacheHandler;
         public readonly IDemonRepository _demonRepository;
         public readonly ICacheKeyGeneratorService _cacheKeyGeneratorService;
+        public readonly IConfiguration _configuration;
 
 
-        /*
+            /*
             DESENVOLVER O CONTROLLER DA PAGINAÇÃO
 
             AGORA OS DEMONS SÃO GUARDADOS COM AS SKILLS TAMBÉM, TUDO JUNTO. RECURSOS SEPARADOS PARA SKILLS PODERIA SER EM OUTRA VERSÃO, MAS...
@@ -35,10 +37,12 @@ namespace ShinCacheTensei.Services
             ...PESQUISA, O NOVO DEMON NÃO VAI APARECER.
          */
 
-        public CacheableDemonService(ICacheRepository cacheHandler, IDemonRepository demonRepository, ICacheKeyGeneratorService cacheKeyGeneratorService) {
+        public CacheableDemonService(ICacheRepository cacheHandler, IDemonRepository demonRepository, ICacheKeyGeneratorService cacheKeyGeneratorService, IConfiguration configuration)
+        {
             _cacheHandler = cacheHandler;
             _demonRepository = demonRepository;
             _cacheKeyGeneratorService = cacheKeyGeneratorService;
+            _configuration = configuration;
         }
 
         public bool GetByIds(int[] ids, out IEnumerable<DemonDto> demonDtos)
@@ -74,10 +78,11 @@ namespace ShinCacheTensei.Services
             return demonDtos.Any();
         }
 
-        public bool GetIdsByFilters(DemonIdListQueryParams demonIdListQueryParams, out int[] ids)
+        public bool GetIdsByFilters(DemonIdListQueryParams demonIdListQueryParams, int quantity, out int[] ids)
         {
-            _demonRepository.GetIdsByFilters(demonIdListQueryParams, 5, 5, out ids);
-            return true;
+            if (quantity > _configuration.GetValue<int>("MaxReturnedDemonsIdsByFilters"))
+                quantity = _configuration.GetValue<int>("MaxReturnedDemonsIdsByFilters");
+            return _demonRepository.GetIdsByFilters(demonIdListQueryParams, quantity, out ids);
         }
 
     }

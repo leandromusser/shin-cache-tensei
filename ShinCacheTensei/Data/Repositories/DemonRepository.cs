@@ -5,18 +5,22 @@ using ShinCacheTensei.Entities;
 using System.Linq;
 using System.Collections.Generic;
 using ShinCacheTensei.Data.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace ShinCacheTensei.Data.Repositories
-{
+{ 
     public class DemonRepository : IDemonRepository
     {
 
         private readonly ShinCacheTenseiContext _shinCacheTenseiContext;
-        public DemonRepository(ShinCacheTenseiContext shinCacheTenseiContext) {
+        public readonly IConfiguration _configuration;
+
+        public DemonRepository(ShinCacheTenseiContext shinCacheTenseiContext, IConfiguration configuration) {
             _shinCacheTenseiContext = shinCacheTenseiContext;
+            _configuration = configuration;
         }
 
-        public bool GetIdsByFilters(DemonIdListQueryParams demonIdListQueryParams, int quantity, int afterId, out int[] ids)
+        public bool GetIdsByFilters(DemonIdListQueryParams demonIdListQueryParams, int quantity, out int[] ids)
         {
 
             IQueryable<Demon> queryIdsss =
@@ -48,7 +52,7 @@ namespace ShinCacheTensei.Data.Repositories
             if (demonIdListQueryParams.AfterId != null)
                 queryIdsss = queryIdsss.Where(d => demonIdListQueryParams.AfterId >= d.Id);
 
-            ids = queryIdsss.Select(d => d.Id).ToArray();
+            ids = queryIdsss.Select(d => d.Id).Take(quantity).ToArray();
             return ids.Any();
 
         }
@@ -61,7 +65,7 @@ namespace ShinCacheTensei.Data.Repositories
 
         public bool GetByIds(int[] ids, out IEnumerable<Demon> demons)
         {
-            IQueryable<Demon> queryableDemons = _shinCacheTenseiContext.Demons.Include(p => p.DemonInitialSkills).ThenInclude(x => x.Skill)
+            IQueryable<Demon> queryableDemons = _shinCacheTenseiContext.Demons.Include(p => p.DemonInitialSkills).ThenInclude(x => x.Skill).Include(x => x.DemonAffinities)
                 .Where((demon) => ids.ToList().Contains(demon.Id));
 
             demons = queryableDemons.ToList();
