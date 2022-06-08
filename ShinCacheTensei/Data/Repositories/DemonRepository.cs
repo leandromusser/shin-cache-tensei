@@ -50,7 +50,7 @@ namespace ShinCacheTensei.Data.Repositories
                 queryIdsss = queryIdsss.Where(d => d.Name.ToLower().Contains(demonIdListQueryParams.ContainsThisTextInName.ToLower()));
 
             if (demonIdListQueryParams.AfterId != null)
-                queryIdsss = queryIdsss.Where(d => demonIdListQueryParams.AfterId <= d.Id);
+                queryIdsss = queryIdsss.Where(d => demonIdListQueryParams.AfterId < d.Id);
 
             ids = queryIdsss.Select(d => d.Id).Take(quantity).ToArray();
             return ids.Any();
