@@ -26,7 +26,7 @@ namespace ShinCacheTensei.Data.Repositories
 
             IQueryable<Demon> query =
                 from Demon in _shinCacheTenseiContext.Demons.Include(d => d.DemonInitialSkills)
-                    .Include(d => d.DemonAffinities).Include(d => d.DemonAffinities).Include(d => d.Race)
+                    .Include(d => d.DemonAffinities).Include(d => d.Race)
                 select Demon;
 
             if (demonIdListQueryParams.ResistNatureId != null)
@@ -63,15 +63,16 @@ namespace ShinCacheTensei.Data.Repositories
 
         }
 
-        public bool GetById(int id, out Demon demon)
-        {
-            demon = _shinCacheTenseiContext.Demons.Where((d) => d.Id == id).FirstOrDefault();
-            return demon == null;
-        }
-
         public bool GetByIds(int[] ids, out IEnumerable<Demon> demons)
         {
-            IQueryable<Demon> queryableDemons = _shinCacheTenseiContext.Demons.Include(p => p.DemonInitialSkills).ThenInclude(x => x.Skill).Include(x => x.DemonAffinities)
+            IQueryable<Demon> queryableDemons = _shinCacheTenseiContext.Demons
+
+                .Include(d => d.Race)
+                .Include(d => d.DemonAffinities).ThenInclude(da => da.AffinityType)
+                .Include(d => d.DemonAffinities).ThenInclude(da => da.Nature)
+                .Include(d => d.RecruitingMethod)
+                .Include(d => d.DemonInitialSkills).ThenInclude(dis => dis.Skill).ThenInclude(s => s.SkillType)
+
                 .Where((demon) => ids.ToList().Contains(demon.Id));
 
             demons = queryableDemons.ToList();
