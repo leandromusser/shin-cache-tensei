@@ -18,6 +18,19 @@ namespace ShinCacheTensei.Data.Repositories
             _memoryCache = memoryCache;
         }
 
+        private void AddValue(object key, object value, string AbsoluteExpirationConfigName, string SlidingExpirationConfigName)
+        {
+            var AbsoluteExpirationInSecondsOfDurableCacheValue = _configuration.GetValue<double>(AbsoluteExpirationConfigName);
+            var SlidingExpirationInSecondsOfDurableCacheValue = _configuration.GetValue<double>(SlidingExpirationConfigName);
+            using (var entry = _memoryCache.CreateEntry(key))
+            {
+                entry.Value = value;
+                entry.SetValue(value);
+                entry.SetAbsoluteExpiration(DateTimeOffset.UtcNow.AddSeconds(AbsoluteExpirationInSecondsOfDurableCacheValue));
+                entry.SetSlidingExpiration(DateTimeOffset.UtcNow.AddSeconds(SlidingExpirationInSecondsOfDurableCacheValue) - DateTimeOffset.UtcNow);
+            }
+        }
+
         public bool GetByKey(object key, out object value)
         {
             return _memoryCache.TryGetValue(key, out value);
@@ -40,15 +53,12 @@ namespace ShinCacheTensei.Data.Repositories
 
         public void AddDurableValue(object key, object value)
         {
-            var SlidingExpirationInSecondsOfDurableCacheValue = _configuration.GetValue<double>("SlidingExpirationInSecondsOfDurableCacheValue");
-            var AbsoluteExpirationInSecondsOfDurableCacheValue = _configuration.GetValue<double>("AbsoluteExpirationInSecondsOfDurableCacheValue");
-            using (var entry = _memoryCache.CreateEntry(key))
-            {
-                entry.Value = value;
-                entry.SetValue(value);
-                entry.SetAbsoluteExpiration(DateTimeOffset.UtcNow.AddSeconds(AbsoluteExpirationInSecondsOfDurableCacheValue));
-                entry.SetSlidingExpiration(DateTimeOffset.UtcNow.AddSeconds(SlidingExpirationInSecondsOfDurableCacheValue) - DateTimeOffset.UtcNow); 
-            }
+            AddValue(key, value, "AbsoluteExpirationInSecondsOfDurableCacheValue", "SlidingExpirationInSecondsOfDurableCacheValue");
+        }
+
+        public void AddFastValue(object key, object value)
+        {
+            AddValue(key, value, "AbsoluteExpirationInSecondsOfFastCacheValue", "SlidingExpirationInSecondsOfFastCacheValue");
         }
 
     }
