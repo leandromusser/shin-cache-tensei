@@ -8,6 +8,6 @@ namespace ShinCacheTensei.Services
     public interface IDemonService
     {
         public bool GetByIds(int[] ids, out IEnumerable<DemonDto> demonDtos);
-        public bool GetIdsByFilters(DemonIdListQueryParams demonIdListQueryParams, int quantity, out int[] ids);
+        public DemonIdListQueryParamsDto GetIdsByFilters(DemonIdListQueryParams demonIdListQueryParams, int quantity);
     }
 }

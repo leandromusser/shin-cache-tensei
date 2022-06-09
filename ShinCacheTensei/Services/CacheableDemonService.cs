@@ -78,11 +78,30 @@ namespace ShinCacheTensei.Services
             return demonDtos.Any();
         }
 
-        public bool GetIdsByFilters(DemonIdListQueryParams demonIdListQueryParams, int quantity, out int[] ids)
+        public DemonIdListQueryParamsDto GetIdsByFilters(DemonIdListQueryParams demonIdListQueryParams, int quantity)
         {
+            var ids = Array.Empty<int>();
+            var demonIdListQueryParamsDto = new DemonIdListQueryParamsDto(ids, OriginType.None);
+
             if (quantity > _configuration.GetValue<int>("MaxReturnedDemonsIdsByFilters"))
                 quantity = _configuration.GetValue<int>("MaxReturnedDemonsIdsByFilters");
-            return _demonRepository.GetIdsByFilters(demonIdListQueryParams, quantity, out ids);
+
+            if (_cacheHandler.GetByKey(_cacheKeyGeneratorService.GeneratedemonIdListQueryParamsKey(demonIdListQueryParams.ToString(), quantity), out object cachedIds))
+            {
+                ids = (int[]) cachedIds;
+                return new DemonIdListQueryParamsDto(ids, OriginType.ServerSideCache);
+            }
+
+            if (_demonRepository.GetIdsByFilters(demonIdListQueryParams, quantity, out ids)) {
+                demonIdListQueryParamsDto = new DemonIdListQueryParamsDto(ids, OriginType.Database);
+                _cacheHandler.AddDurableValue(_cacheKeyGeneratorService.GeneratedemonIdListQueryParamsKey(demonIdListQueryParams.ToString(), quantity), ids);
+                return demonIdListQueryParamsDto;
+            }
+
+            demonIdListQueryParamsDto = new DemonIdListQueryParamsDto(ids, OriginType.None);
+            _cacheHandler.AddFastValue(_cacheKeyGeneratorService.GeneratedemonIdListQueryParamsKey(demonIdListQueryParams.ToString(), quantity), ids);
+            return demonIdListQueryParamsDto;
+
         }
 
     }
