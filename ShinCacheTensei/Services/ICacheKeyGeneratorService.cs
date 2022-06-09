@@ -6,6 +6,7 @@ namespace ShinCacheTensei.Services
     public interface ICacheKeyGeneratorService
     {
         public string GenerateDemonKey(int id);
+        public string GeneratedemonIdListQueryParamsKey(string queryParams, int quantity);
 
     }
 }

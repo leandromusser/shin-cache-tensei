@@ -20,5 +20,12 @@ namespace ShinCacheTensei.Data.Models
             return new { ResistNatureId, WeakNatureId, MinimumLevel, MaximumLevel, DemonRaceId, SkillId, ContainsThisTextInName, AfterId }.GetHashCode();
         }
 
+        public override string ToString()
+        {
+            //Eu poderia usar reflection para varrer os campos e fazer o código abaixo automáticamente.
+            return $"ResistNatureId={ResistNatureId}&WeakNatureId={WeakNatureId}&MinimumLevel={MinimumLevel}&MaximumLevel={MaximumLevel}&DemonRaceId={DemonRaceId}" +
+                $"&SkillId={SkillId}&ContainsThisTextInName={ContainsThisTextInName}&AfterId={AfterId}";
+        }
+
     }
 }
