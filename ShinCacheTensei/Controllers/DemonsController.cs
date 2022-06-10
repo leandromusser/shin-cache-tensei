@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 //using System.Runtime.Caching;
 using Microsoft.Extensions.Caching.Memory;
 using ShinCacheTensei.Data.Repositories;
-using ShinCacheTensei.Services;
 using Microsoft.AspNetCore.Http;
 using ShinCacheTensei.Entities;
 using Swashbuckle.AspNetCore.Annotations;
 using ShinCacheTensei.Data.Models;
 using ShinCacheTensei.Dtos;
+using ShinCacheTensei.Services;
 
 namespace ShinCacheTensei.Controllers
 {
