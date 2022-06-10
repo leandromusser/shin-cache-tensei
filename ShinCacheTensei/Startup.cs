@@ -36,6 +36,10 @@ namespace ShinCacheTensei
             services.AddScoped<IDemonRepository, DemonRepository>();
             services.AddScoped<IDemonService, CacheableDemonService>();
             services.AddScoped<ICacheKeyGeneratorService, CacheKeyGeneratorService>();
+
+            services.AddScoped<IFilterOptionRepository, FilterOptionRepository>();
+            services.AddScoped<IFilterOptionsService, FilterOptionsService>();
+
             services.AddScoped<ShinCacheTenseiContext>();
             services.AddSingleton<IConfiguration>(Configuration);
 
