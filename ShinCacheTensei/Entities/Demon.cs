@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace ShinCacheTensei.Entities
 {
@@ -10,6 +11,9 @@ namespace ShinCacheTensei.Entities
 
         public string Name { get; set; }
 
+        [JsonIgnore]
+        public int DemonRaceId { get; set; }
+        
         public DemonRace Race { get; set; }
 
         public int? InitialLevel { get; set; }
@@ -23,6 +27,8 @@ namespace ShinCacheTensei.Entities
         public int? InitialAgi { get; set; }
         public int? InitialLck { get; set; }
 
+        [JsonIgnore]
+        public int RecruitingMethodId { get; set; }
         public RecruitingMethod RecruitingMethod { get; set; }
         public ICollection<DemonInitialSkill> DemonInitialSkills { get; set; }
         public ICollection<DemonAffinity> DemonAffinities { get; set; }
