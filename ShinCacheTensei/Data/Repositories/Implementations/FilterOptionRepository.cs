@@ -23,5 +23,15 @@ namespace ShinCacheTensei.Data.Repositories
         {
             return _shinCacheTenseiContext.Natures.Select(n => new Tuple<int, string>(n.Id, n.Name));
         }
+
+        public IEnumerable<Tuple<int, string>> GetDemonRaceFilterOptions()
+        {
+            return _shinCacheTenseiContext.DemonRaces.Select(n => new Tuple<int, string>(n.Id, n.Name));
+        }
+
+        public IEnumerable<Tuple<int, string>> GetSkillFilterOptions()
+        {
+            return _shinCacheTenseiContext.Skills.Select(n => new Tuple<int, string>(n.Id, n.Name));
+        }
     }
 }
