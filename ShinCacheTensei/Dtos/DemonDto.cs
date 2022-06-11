@@ -1,5 +1,5 @@
 ﻿using ShinCacheTensei.Entities;
-using ShinCacheTensei.Services;
+using ShinCacheTensei.Services.Enums;
 
 namespace ShinCacheTensei.Dtos
 {

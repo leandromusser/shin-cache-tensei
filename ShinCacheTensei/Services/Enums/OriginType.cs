@@ -1,4 +1,4 @@
-﻿namespace ShinCacheTensei.Services
+﻿namespace ShinCacheTensei.Services.Enums
 {
     public enum OriginType
     {

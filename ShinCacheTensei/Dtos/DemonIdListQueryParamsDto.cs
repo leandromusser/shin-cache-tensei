@@ -1,6 +1,6 @@
 ﻿using ShinCacheTensei.Data.Models;
 using ShinCacheTensei.Entities;
-using ShinCacheTensei.Services;
+using ShinCacheTensei.Services.Enums;
 
 namespace ShinCacheTensei.Dtos
 {

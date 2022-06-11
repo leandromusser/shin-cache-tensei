@@ -3,6 +3,7 @@ using ShinCacheTensei.Data.Models;
 using ShinCacheTensei.Data.Repositories;
 using ShinCacheTensei.Dtos;
 using ShinCacheTensei.Entities;
+using ShinCacheTensei.Services.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
