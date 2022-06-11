@@ -12,12 +12,10 @@ namespace ShinCacheTensei.Dtos
 
         [JsonPropertyName("Value")]
         public string FilterValue { get; set; }
-        public OriginType CameFrom { get; set; }
 
-        public FilterOptionDto(string filterValue, int filterId, OriginType cameFrom) {
+        public FilterOptionDto(string filterValue, int filterId) {
             FilterValue = filterValue;
             FilterId = filterId;
-            CameFrom = cameFrom;
         }
 
     }

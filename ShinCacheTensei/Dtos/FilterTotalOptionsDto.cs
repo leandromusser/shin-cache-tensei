@@ -10,13 +10,15 @@ namespace ShinCacheTensei.Dtos
     {
         [JsonPropertyName("Category")]
         public string FilterCategory { get; set; }
+        public OriginType CameFrom { get; set; }
 
         [JsonPropertyName("Values")]
         public IEnumerable<FilterOptionDto> FilterOptionDtos { get; set; }
 
-        public FilterTotalOptionsDto(IEnumerable<FilterOptionDto> filterOptionDtos, string filterCategory) {
+        public FilterTotalOptionsDto(IEnumerable<FilterOptionDto> filterOptionDtos, string filterCategory, OriginType cameFrom) {
             FilterOptionDtos = filterOptionDtos;
             FilterCategory = filterCategory;
+            CameFrom = cameFrom;
         }
 
     }

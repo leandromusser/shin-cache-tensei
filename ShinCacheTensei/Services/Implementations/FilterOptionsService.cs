@@ -36,9 +36,9 @@ namespace ShinCacheTensei.Services
             }.ToArray()) {
                 foreach (var tupleIdsAndValues in categoryNameAndValues.Item2.Invoke())
                 {
-                    filterOptionsDtos.Add(new FilterOptionDto(tupleIdsAndValues.Item2, tupleIdsAndValues.Item1, OriginType.Database));
+                    filterOptionsDtos.Add(new FilterOptionDto(tupleIdsAndValues.Item2, tupleIdsAndValues.Item1));
                 }
-                filterTotalOptionsDtos.Add(new FilterTotalOptionsDto(filterOptionsDtos, categoryNameAndValues.Item1));
+                filterTotalOptionsDtos.Add(new FilterTotalOptionsDto(filterOptionsDtos, categoryNameAndValues.Item1, OriginType.Database));
                 filterOptionsDtos = new List<FilterOptionDto>();
             }
             return filterTotalOptionsDtos;
