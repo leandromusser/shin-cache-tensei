@@ -8,5 +8,7 @@ namespace ShinCacheTensei.Services
         public string GenerateDemonKey(int id);
         public string GenerateDemonIdListQueryParamsKey(string queryParams, int quantity);
 
+        public string GenerateFilterKey(string filterName);
+
     }
 }

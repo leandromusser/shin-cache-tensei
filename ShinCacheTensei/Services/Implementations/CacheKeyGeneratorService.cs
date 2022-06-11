@@ -7,6 +7,7 @@ namespace ShinCacheTensei.Services
     {
         public string GenerateDemonKey(int id) => $"Demon: {id}";
         public string GenerateDemonIdListQueryParamsKey(string queryParams, int quantity) => $"QueryParams (max. {quantity}): {queryParams}";
+        public string GenerateFilterKey(string filterName) => $"Filter: {filterName})";
 
     }
 }
