@@ -17,7 +17,7 @@ using ShinCacheTensei.Services;
 namespace ShinCacheTensei.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/v1/[controller]")]
     public class FilterOptionsController : ControllerBase
     {
         private readonly IFilterOptionsService _filterOptionsService;

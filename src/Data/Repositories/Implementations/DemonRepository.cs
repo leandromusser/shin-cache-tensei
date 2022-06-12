@@ -6,7 +6,7 @@ using System.Linq;
 using System.Collections.Generic;
 using ShinCacheTensei.Data.Models;
 using Microsoft.Extensions.Configuration;
-using System;
+using System.Threading.Tasks;
 
 namespace ShinCacheTensei.Data.Repositories
 { 
@@ -21,8 +21,9 @@ namespace ShinCacheTensei.Data.Repositories
             _configuration = configuration;
         }
 
-        public bool GetIdsByFilters(DemonIdListQueryParams demonIdListQueryParams, int quantity, out int[] ids)
+        public async Task<int[]> GetIdsByFilters(DemonIdListQueryParams demonIdListQueryParams, int quantity)
         {
+            int[] ids;
 
             IQueryable<Demon> query =
                 from Demon in _shinCacheTenseiContext.Demons.Include(d => d.DemonInitialSkills)
@@ -54,16 +55,19 @@ namespace ShinCacheTensei.Data.Repositories
             {
                 //Infelizmente, ao sair do IQueryable, todos os dados da query são puxados e filtrados aqui mesmo no servidor
                 //Registro que tenho ciência deste problema
-                ids = query.ToArray().SkipWhile(s => s.Id != demonIdListQueryParams.AfterId).Skip(1).Take(quantity).Select(d => d.Id).ToArray();
+                ids = await query
+                    .SkipWhile(s => s.Id != demonIdListQueryParams.AfterId)
+                    .Skip(1).Take(quantity)
+                    .Select(d => d.Id)
+                    .ToArrayAsync();
             }
             else
-                ids = query.Take(quantity).Select(d => d.Id).ToArray();
+                ids = await query.Take(quantity).Select(d => d.Id).ToArrayAsync();
 
-            return ids.Any();
-
+            return ids;
         }
 
-        public bool GetByIds(int[] ids, out IEnumerable<Demon> demons)
+        public async Task<IEnumerable<Demon>> GetByIds(int[] ids)
         {
             IQueryable<Demon> queryableDemons = _shinCacheTenseiContext.Demons
 
@@ -75,8 +79,7 @@ namespace ShinCacheTensei.Data.Repositories
 
                 .Where((demon) => ids.ToList().Contains(demon.Id));
 
-            demons = queryableDemons.ToList();
-            return demons.Any();
+            return await queryableDemons.ToListAsync();
         }
 
     }
