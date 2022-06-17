@@ -9,6 +9,8 @@ namespace ShinCacheTensei.Data
 {
     public class ShinCacheTenseiContext: DbContext
     {
+        public ShinCacheTenseiContext(DbContextOptions dbContextOptions): base(dbContextOptions) {}
+
         public DbSet<AffinityType> AffinityTypes { get; set; }
         public DbSet<Demon> Demons { get; set; }
         public DbSet<DemonRace> DemonRaces { get; set; }
@@ -19,11 +21,8 @@ namespace ShinCacheTensei.Data
         public DbSet<Skill> Skills { get; set; }
         public DbSet<SkillType> SkillTypes { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(
-                @"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True");
-        }
+        //Vou deixar vazio por enquanto para eu estudar mais sobre este método depois
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder){}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
 

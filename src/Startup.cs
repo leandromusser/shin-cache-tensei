@@ -15,6 +15,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using ShinCacheTensei.Services;
 using ShinCacheTensei.Data;
+using Microsoft.EntityFrameworkCore.SqlServer;
+using Microsoft.EntityFrameworkCore;
 
 namespace ShinCacheTensei
 {
@@ -31,6 +33,9 @@ namespace ShinCacheTensei
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMemoryCache();
+
+            services.AddDbContext<ShinCacheTenseiContext>(options => options.UseSqlServer
+                (@"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True"));
 
             services.AddScoped<ICacheRepository, CacheRepository>();
             services.AddScoped<IDemonRepository, DemonRepository>();
