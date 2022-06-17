@@ -18,10 +18,11 @@ Até o momento, destaco as seguintes tecnologias, técnicas e padrões usados:
 - Swashbuckle | Swagger
 - Visual Studio Community 2022
 - Diferentes camadas, cada uma com sua responsabilidade: Controller > Service > Repository > Context
+- NUnit
 
 # Funcionamento até o momento
 
-Existem três endpoints: ```/demons```, ```/demons/search``` e ```/filteroptions```. Pense nesses Demons como se fossem Pokémons, mas de outra franquia. Inicialmente, uma requisição GET é feita para /demons/search com os critérios da pesquisa, que podem ser nome, fraqueza, skill que possui, etc. Exemplo: ```/demons/search?MinimumLevel=40&MaximumLevel=60&Quantity=5``` (retorne até 5 ids de Demons que sejam do nível 40 até o nível 50). A quantidade máxima que pode ser retornada está definida no appsettings.json, evitando de retornar tudo de uma vez.
+Existem três endpoints: ```/demons```, ```/demons/search``` e ```/filteroptions```. Pense nesses Demons como se fossem Pokémons, mas de outra franquia. Inicialmente, uma requisição GET é feita para /demons/search com os critérios da pesquisa, que podem ser nome, fraqueza, skill que possui, etc. Exemplo: ```/demons/search?MinimumLevel=40&MaximumLevel=60&Quantity=5``` (retorne até 5 ids de Demons que sejam do nível 40 até o nível 60). A quantidade máxima que pode ser retornada está definida no appsettings.json, evitando de retornar tudo de uma vez.
 
 Também é possível usar paginação: ```/demons/search?MinimumLevel=40&Quantity=5&AfterId=6``` (retorne até 5 ids de Demons que sejam no mínimo do nível 40 e que, ao final de toda filtragem, pegue apenas os que estão após o Demon de id 6. A lógica é que se você fez essa mesma busca anteriormente, como por exemplo ```/demons/search?MinimumLevel=40&Quantity=5``` e foi retornado os Demons de ids 7, 2, 3, 9 e 6, caso você queira obter mais do que isso, é só usar o parâmetro AfterId como igual a 6 para buscar mais 5 após o último elemento.
 
