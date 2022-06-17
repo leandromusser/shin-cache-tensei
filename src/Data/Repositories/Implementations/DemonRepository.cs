@@ -5,7 +5,6 @@ using ShinCacheTensei.Entities;
 using System.Linq;
 using System.Collections.Generic;
 using ShinCacheTensei.Data.Models;
-using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
 
 namespace ShinCacheTensei.Data.Repositories
@@ -14,11 +13,9 @@ namespace ShinCacheTensei.Data.Repositories
     {
 
         private readonly ShinCacheTenseiContext _shinCacheTenseiContext;
-        public readonly IConfiguration _configuration;
 
-        public DemonRepository(ShinCacheTenseiContext shinCacheTenseiContext, IConfiguration configuration) {
+        public DemonRepository(ShinCacheTenseiContext shinCacheTenseiContext) {
             _shinCacheTenseiContext = shinCacheTenseiContext;
-            _configuration = configuration;
         }
 
         public async Task<int[]> GetIdsByFilters(DemonIdListQueryParams demonIdListQueryParams, int quantity)
