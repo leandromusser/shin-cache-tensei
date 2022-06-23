@@ -16,9 +16,8 @@ namespace tests.Data.Repositories
     [TestFixture]
     public class DemonRepositoryTest
     {
-        //Trocar o nome do banco de dados depois para tirar esse que é padrão
         private readonly DbContextOptions<ShinCacheTenseiContext> dbContextOptions = new DbContextOptionsBuilder<ShinCacheTenseiContext>()
-        .UseInMemoryDatabase(databaseName: "Blogging")
+        .UseInMemoryDatabase(databaseName: "ShinCacheTensei")
         .Options;
         private ShinCacheTenseiContext _shinCacheTenseiContext;
         private DemonRepository _demonRepository;
@@ -26,13 +25,6 @@ namespace tests.Data.Repositories
         [OneTimeSetUp]
         public void Setup()
         {
-            /*
-            //Vai ser usados nos testes do CacheRepository
-            IConfigurationRoot configuration = new ConfigurationBuilder().SetBasePath("/")
-                .AddInMemoryCollection(new Dictionary<string, string>())
-                .Build();
-            */
-
             _shinCacheTenseiContext = new ShinCacheTenseiContext(dbContextOptions);
             AddData();
             _demonRepository = new DemonRepository(_shinCacheTenseiContext);
@@ -41,14 +33,31 @@ namespace tests.Data.Repositories
         private void AddData() {
             _shinCacheTenseiContext.RecruitingMethods.Add(new RecruitingMethod() { Id = 1, Description = "Fusion only" });
             _shinCacheTenseiContext.DemonRaces.Add(new DemonRace() { Id = 1, Name = "Avatar" });
-            _shinCacheTenseiContext.Demons.Add(new Demon() { Id = 5, Name = "Leandro", InitialLevel = 50, DemonRaceId = 1, RecruitingMethodId = 1});
+            _shinCacheTenseiContext.Demons.Add(new Demon() { Id = 5, Name = "Leandro", InitialLevel = 50, DemonRaceId = 1, RecruitingMethodId = 1 });
+            _shinCacheTenseiContext.Demons.Add(new Demon() { Id = 7, Name = "Starlight", InitialLevel = 51, DemonRaceId = 1, RecruitingMethodId = 1 });
+            _shinCacheTenseiContext.Demons.Add(new Demon() { Id = 8, Name = "Nea", InitialLevel = 62, DemonRaceId = 1, RecruitingMethodId = 1 });
             _shinCacheTenseiContext.SaveChanges();
         }
 
         [Test]
-        public void FirstTest() {
-            Assert.That(_demonRepository.GetByIds(new int[] {5}).Result, Has.Count.AtLeast(1));
+        [TestCase(new int[] { 5, 7, 8, 9 })]
+        [TestCase(new int[] { 9 })]
+        public void ShouldReturnXDemonsMinusNonExistents(int[] demonIdsAndNonExistentDemonId)
+        {
+            Assert.That(_demonRepository.GetByIds(demonIdsAndNonExistentDemonId).Result, Has.Count.EqualTo(demonIdsAndNonExistentDemonId.Length - 1));
         }
-        
+
+        [Test]
+        public void ShouldReturnTwoDemonIdsUsingFilters()
+        {
+            var demonIdListQueryParams = new DemonIdListQueryParams
+            {
+                MinimumLevel = 51,
+                DemonRaceId = 1,
+                ContainsThisTextInName = "a"
+            };
+
+            Assert.That(_demonRepository.GetIdsByFilters(demonIdListQueryParams, 5).Result, Has.Length.EqualTo(2));
+        }
     }
 }
