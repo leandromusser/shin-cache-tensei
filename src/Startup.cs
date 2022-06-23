@@ -35,7 +35,7 @@ namespace ShinCacheTensei
             services.AddMemoryCache();
 
             services.AddDbContext<ShinCacheTenseiContext>(options => options.UseSqlServer
-                (@"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True"));
+                (@"Server=(localdb)\mssqllocaldb;Database=ShinCacheTensei;Trusted_Connection=True"));
 
             services.AddScoped<ICacheRepository, CacheRepository>();
             services.AddScoped<IDemonRepository, DemonRepository>();
@@ -69,7 +69,6 @@ namespace ShinCacheTensei
             
             
             //app.UseCors();
-
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
