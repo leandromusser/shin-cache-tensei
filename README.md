@@ -1,4 +1,4 @@
-# [EM CONSTRUÇÃO] ShinCacheTensei
+# [EM CONSTRUÇÃO - README temporário apenas para listar o que está sendo feito] ShinCacheTensei
 
 O objetivo aqui é simplesmente ganhar conhecimento desenvolvendo do zero um projeto pessoal onde o foco está no uso de cache de memória.
 Até o momento, destaco as seguintes tecnologias, técnicas e padrões usados: 
@@ -18,11 +18,13 @@ Até o momento, destaco as seguintes tecnologias, técnicas e padrões usados:
 - Swashbuckle | Swagger
 - Visual Studio Community 2022
 - Diferentes camadas, cada uma com sua responsabilidade: Controller > Service > Repository > Context
+- Boas práticas, como usar variáveis de ambiente para guardar informações sensíveis como a string de conexão do Postgre
 - NUnit
+- Docker
 
 # Funcionamento até o momento
 
-Existem três endpoints: ```/demons```, ```/demons/search``` e ```/filteroptions```. Pense nesses Demons como se fossem Pokémons, mas de outra franquia. Inicialmente, uma requisição GET é feita para /demons/search com os critérios da pesquisa, que podem ser nome, fraqueza, skill que possui, etc. Exemplo: ```/demons/search?MinimumLevel=40&MaximumLevel=60&Quantity=5``` (retorne até 5 ids de Demons que sejam do nível 40 até o nível 60). A quantidade máxima que pode ser retornada está definida no appsettings.json, evitando de retornar tudo de uma vez.
+Existem três endpoints: ```/demons```, ```/demons/search``` e ```/filteroptions```. Pense nesses Demons como se fossem Pokémons, mas de outra franquia. Inicialmente, uma requisição GET é feita para ```/demons/search``` com os critérios da pesquisa, que podem ser nome, fraqueza, skill que possui, etc. Exemplo: ```/demons/search?MinimumLevel=40&MaximumLevel=60&Quantity=5``` (retorne até 5 ids de Demons que sejam do nível 40 até o nível 60). A quantidade máxima que pode ser retornada está definida no appsettings.json, evitando de retornar tudo de uma vez.
 
 Também é possível usar paginação: ```/demons/search?MinimumLevel=40&Quantity=5&AfterId=6``` (retorne até 5 ids de Demons que sejam no mínimo do nível 40 e que, ao final de toda filtragem, pegue apenas os que estão após o Demon de id 6. A lógica é que se você fez essa mesma busca anteriormente, como por exemplo ```/demons/search?MinimumLevel=40&Quantity=5``` e foi retornado os Demons de ids 7, 2, 3, 9 e 6, caso você queira obter mais do que isso, é só usar o parâmetro AfterId como igual a 6 para buscar mais 5 após o último elemento.
 
@@ -32,8 +34,10 @@ Essa mesma lógica do cache acima é aplicada no caso da busca pelos ids de Demo
 
 O endpoint ```/filteroptions``` é responsável por retornar as opções de filtro disponíveis (ex: Nomes de todas as raças e seus respectivos ids, que serão usados tanto para exibição no Front-end quanto para o envio da requisição para ```/demons/search```) e, além disso, ele também fica armazenado em cache, embora não tenha paginação, pois a quantidade é bem menor e é limitada.
 
+Apesar de básicos e cobrir apenas alguns casos de uso da camada Repository, o projeto possui alguns testes automatizados com NUnit, bastando um ```dotnet test``` no diretório tests para testar. Docker pode ser usado setando as variáveis de ambiente PORT (porta do container) e DATABASE_URL (string de conexão do PostgreSQL). Futuramente criarei um PostgreSQL local em uma segunda imagem Docker, pois o LocalDB do SQL Server não funciona no Linux, mas no momento o foco está no uso pelo Heroku.
+
 # Próximos objetivos
 
-As funcionalidades principais já estão prontas e basta aplicar as migrations e usar um simples ```dotnet run``` para rodar o projeto e fazer testes com Swagger, Postman ou outro. O foco agora será em melhorias no código e criação de um front-end super simples, pois meu foco é back-end. No fim, usarei este projeto como base para meus estudos com NUnit e CI/CD. Após essa etapa, será feito o deploy na Heroku usando o modelo de deploy com imagem Docker.
+As funcionalidades principais já estão prontas e basta aplicar as migrations e usar um simples ```dotnet run``` para rodar o projeto e fazer testes com Swagger, Postman ou outro. O foco agora será em melhorias no código, criação de um front-end super simples (meu foco é back-end), popular o banco de dados e parar para estudar cada detalhe a fundo. Alguns testes básicos pelo Swagger pode ser feito rapidamente por aqui: https://tempabc.herokuapp.com/swagger/index.html O deploy foi feito usando o modelo de imagem Docker: https://devcenter.heroku.com/articles/container-registry-and-runtime Tentarei também usar conceitos de CI/CD com Github Actions para automatizar todo esse processo.
 
 Inspirado em: https://leandro-rmc.github.io/SENAC/[Basico]_Algoritmos_e_JavaScript/smtNocturne/demons.html
