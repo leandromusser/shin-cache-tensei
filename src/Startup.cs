@@ -22,9 +22,11 @@ namespace ShinCacheTensei
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IWebHostEnvironment _env;  
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            _env = env;
         }
 
         public IConfiguration Configuration { get; }
@@ -34,8 +36,30 @@ namespace ShinCacheTensei
         {
             services.AddMemoryCache();
 
-            services.AddDbContext<ShinCacheTenseiContext>(options => options.UseSqlServer
+            if (_env.IsDevelopment())
+                services.AddDbContext<ShinCacheTenseiContext>(options => options.UseSqlServer
                 (@"Server=(localdb)\mssqllocaldb;Database=ShinCacheTensei;Trusted_Connection=True"));
+            else
+            {
+                Environment.GetEnvironmentVariable("DATABASE_URL");
+                string postgresUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+
+                var postgresUri = new Uri(postgresUrl);
+                string postgresDatabase = postgresUri.LocalPath.Replace("/", "");
+                string[] postgresUserInfo = postgresUri.UserInfo.Split(":");
+
+                services.AddDbContext<ShinCacheTenseiContext>(options => options.UseNpgsql
+                (
+                $"Host = {postgresUri.Host};" +
+                $"Database = {postgresDatabase};" +
+                $"Port = {postgresUri.Port};" +
+                $"User Id = {postgresUserInfo[0]};" +
+                $"Password = {postgresUserInfo[1]};" +
+
+                "SSL Mode = Require;" +
+                "Trust Server Certificate = true;"
+                ));
+            }
 
             services.AddScoped<ICacheRepository, CacheRepository>();
             services.AddScoped<IDemonRepository, DemonRepository>();
@@ -60,7 +84,8 @@ namespace ShinCacheTensei
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            //Vou manter o Swagger em produção
+            //if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
@@ -73,7 +98,7 @@ namespace ShinCacheTensei
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
