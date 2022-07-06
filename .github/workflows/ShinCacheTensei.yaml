@@ -60,7 +60,7 @@ jobs:
                 context: .
                 file: Dockerfile
                 push: true
-                tags: ${{ secrets.DOCKERHUB_USER }}/ShinCacheTensei:latest
+                tags: ${{ secrets.DOCKERHUB_USER }}/shin-cache-tensei:latest
                 
     
     Deploy-Heroku:
