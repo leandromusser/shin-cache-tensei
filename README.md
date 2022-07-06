@@ -38,6 +38,18 @@ Apesar de básicos e cobrir apenas alguns casos de uso da camada Repository, o p
 
 # Próximos objetivos
 
+<<<<<<< HEAD
+As funcionalidades principais já estão prontas e basta aplicar as migrations e usar um simples ```dotnet run``` para rodar o projeto e fazer testes com Swagger, Postman ou outro. O foco agora será em melhorias no código, criação de um front-end super simples (meu foco é back-end), popular o banco de dados e parar para estudar cada detalhe a fundo. 
+
+Alguns testes básicos pelo Swagger podem ser feitos rapidamente por aqui: https://shincachetensei.herokuapp.com/swagger/index.html
+No endpoint /api/v1/demons/search, colocar o valor 5 ou maior no campo quantity para pegar alguns ids de Demons rapidamente.
+No endpoint /api/v1/demons, pode usar os valores 5, 6, 7, 8, 9 e 10 para buscar os demons com esses ids.
+No endpoint /api/v1/filteroptions, basta um GET sem parâmetros para pegar os filtros disponíveis.
+Esses valores aqui são apenas para testes e são baseados nos poucos dados que já existem no banco de dados.
+
+O deploy pelo Heroku foi feito usando o modelo de imagem Docker: https://devcenter.heroku.com/articles/container-registry-and-runtime Usei conceitos de CI/CD com Github Actions para automatizar todo esse processo.
+=======
 As funcionalidades principais já estão prontas e basta aplicar as migrations e usar um simples ```dotnet run``` para rodar o projeto e fazer testes com Swagger, Postman ou outro. O foco agora será em melhorias no código, criação de um front-end super simples (meu foco é back-end), popular o banco de dados e parar para estudar cada detalhe a fundo. Alguns testes básicos pelo Swagger pode ser feito rapidamente por aqui: https://tempabc.herokuapp.com/swagger/index.html O deploy foi feito usando o modelo de imagem Docker: https://devcenter.heroku.com/articles/container-registry-and-runtime Tentarei também usar conceitos de CI/CD com Github Actions para automatizar todo esse processo.
+>>>>>>> parent of 3186927 (Added more info to README.md (Github Actions, Heroku, updated link for the app, test values...))
 
 Inspirado em: https://leandro-rmc.github.io/SENAC/[Basico]_Algoritmos_e_JavaScript/smtNocturne/demons.html
