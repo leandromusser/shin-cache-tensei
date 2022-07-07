@@ -48,6 +48,6 @@ No endpoint /api/v1/demons, pode usar os valores 5, 6, 7, 8, 9 e 10 para buscar 
 No endpoint /api/v1/filteroptions, basta um GET sem parâmetros para pegar os filtros disponíveis.
 Esses valores aqui são apenas para testes e são baseados nos poucos dados que já existem no banco de dados.
 
-O deploy pelo Heroku foi feito usando o modelo de imagem Docker: https://devcenter.heroku.com/articles/container-registry-and-runtime Useiconceitos de CI/CD com Github Actions para automatizar todo esse processo.
+O deploy pelo Heroku foi feito usando o modelo de imagem Docker: https://devcenter.heroku.com/articles/container-registry-and-runtime Usei conceitos de CI/CD com Github Actions para automatizar todo esse processo.
 
 Inspirado em: https://leandro-rmc.github.io/SENAC/[Basico]_Algoritmos_e_JavaScript/smtNocturne/demons.html
