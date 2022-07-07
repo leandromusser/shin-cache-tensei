@@ -21,6 +21,8 @@ Até o momento, destaco as seguintes tecnologias, técnicas e padrões usados:
 - Boas práticas, como usar variáveis de ambiente para guardar informações sensíveis como a string de conexão do Postgre
 - NUnit
 - Docker
+- Heroku
+- CI/CD com Github Actions
 
 # Funcionamento até o momento
 
@@ -36,9 +38,6 @@ O endpoint ```/filteroptions``` é responsável por retornar as opções de filt
 
 Apesar de básicos e cobrir apenas alguns casos de uso da camada Repository, o projeto possui alguns testes automatizados com NUnit, bastando um ```dotnet test``` no diretório tests para testar. Docker pode ser usado setando as variáveis de ambiente PORT (porta do container) e DATABASE_URL (string de conexão do PostgreSQL). Futuramente criarei um PostgreSQL local em uma segunda imagem Docker, pois o LocalDB do SQL Server não funciona no Linux, mas no momento o foco está no uso pelo Heroku.
 
-# Próximos objetivos
-
-<<<<<<< HEAD
 As funcionalidades principais já estão prontas e basta aplicar as migrations e usar um simples ```dotnet run``` para rodar o projeto e fazer testes com Swagger, Postman ou outro. O foco agora será em melhorias no código, criação de um front-end super simples (meu foco é back-end), popular o banco de dados e parar para estudar cada detalhe a fundo. 
 
 Alguns testes básicos pelo Swagger podem ser feitos rapidamente por aqui: https://shincachetensei.herokuapp.com/swagger/index.html
@@ -48,8 +47,8 @@ No endpoint /api/v1/filteroptions, basta um GET sem parâmetros para pegar os fi
 Esses valores aqui são apenas para testes e são baseados nos poucos dados que já existem no banco de dados.
 
 O deploy pelo Heroku foi feito usando o modelo de imagem Docker: https://devcenter.heroku.com/articles/container-registry-and-runtime Usei conceitos de CI/CD com Github Actions para automatizar todo esse processo.
-=======
+
 As funcionalidades principais já estão prontas e basta aplicar as migrations e usar um simples ```dotnet run``` para rodar o projeto e fazer testes com Swagger, Postman ou outro. O foco agora será em melhorias no código, criação de um front-end super simples (meu foco é back-end), popular o banco de dados e parar para estudar cada detalhe a fundo. Alguns testes básicos pelo Swagger pode ser feito rapidamente por aqui: https://tempabc.herokuapp.com/swagger/index.html O deploy foi feito usando o modelo de imagem Docker: https://devcenter.heroku.com/articles/container-registry-and-runtime Tentarei também usar conceitos de CI/CD com Github Actions para automatizar todo esse processo.
->>>>>>> parent of 3186927 (Added more info to README.md (Github Actions, Heroku, updated link for the app, test values...))
+
 
 Inspirado em: https://leandro-rmc.github.io/SENAC/[Basico]_Algoritmos_e_JavaScript/smtNocturne/demons.html
