@@ -48,7 +48,4 @@ Esses valores aqui são apenas para testes e são baseados nos poucos dados que 
 
 O deploy pelo Heroku foi feito usando o modelo de imagem Docker: https://devcenter.heroku.com/articles/container-registry-and-runtime Usei conceitos de CI/CD com Github Actions para automatizar todo esse processo.
 
-As funcionalidades principais já estão prontas e basta aplicar as migrations e usar um simples ```dotnet run``` para rodar o projeto e fazer testes com Swagger, Postman ou outro. O foco agora será em melhorias no código, criação de um front-end super simples (meu foco é back-end), popular o banco de dados e parar para estudar cada detalhe a fundo. Alguns testes básicos pelo Swagger pode ser feito rapidamente por aqui: https://tempabc.herokuapp.com/swagger/index.html O deploy foi feito usando o modelo de imagem Docker: https://devcenter.heroku.com/articles/container-registry-and-runtime Tentarei também usar conceitos de CI/CD com Github Actions para automatizar todo esse processo.
-
-
 Inspirado em: https://leandro-rmc.github.io/SENAC/[Basico]_Algoritmos_e_JavaScript/smtNocturne/demons.html
