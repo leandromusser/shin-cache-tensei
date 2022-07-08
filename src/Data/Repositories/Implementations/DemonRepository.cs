@@ -18,6 +18,10 @@ namespace ShinCacheTensei.Data.Repositories
             _shinCacheTenseiContext = shinCacheTenseiContext;
         }
 
+        /*
+            Busca todos os ids dos demons que estejam de acordo com os filtros passados.
+            Exemplo: Quero os ids de (variável quantity) Demons que sejam da raça Divine e que venham depois do id x (paginação).
+         */
         public async Task<int[]> GetIdsByFilters(DemonIdListQueryParams demonIdListQueryParams, int quantity)
         {
             int[] ids;
@@ -48,10 +52,19 @@ namespace ShinCacheTensei.Data.Repositories
             if (demonIdListQueryParams.ContainsThisTextInName != null)
                 query = query.Where(d => d.Name.ToLower().Contains(demonIdListQueryParams.ContainsThisTextInName.ToLower()));
 
+            /*
+                Lógica da paginação.
+                Primeiro é verificado se o AfterId passado não é nulo, então as linhas são percorridas até chegar no Demon com esse id.
+                Após isso, os (variável quantity) ids de Demons que estão após ele serão pegos.
+             */
             if (demonIdListQueryParams.AfterId != null)
             {
-                //Infelizmente, ao sair do IQueryable, todos os dados da query são puxados e filtrados aqui mesmo no servidor
-                //Registro que tenho ciência deste problema
+                /*
+                    Esta instrução possui um problema: Ao sair do IQueryable, todos os dados da query são puxados e filtrados aqui mesmo no...
+                    ...servidor. Isso não é bom, pois causa processamento e transferência de dados adicionais.
+                    Deixo registrado que tenho ciência disso.
+                 */
+
                 ids = await query
                     .SkipWhile(s => s.Id != demonIdListQueryParams.AfterId)
                     .Skip(1).Take(quantity)
@@ -59,11 +72,15 @@ namespace ShinCacheTensei.Data.Repositories
                     .ToArrayAsync();
             }
             else
+                //Pega os primeiros que aparecerem, caso o AfterId seja nulo
                 ids = await query.Take(quantity).Select(d => d.Id).ToArrayAsync();
 
             return ids;
         }
 
+        /*
+            Método usado para buscar no banco de dados todos os demons possíveis que tenham os ids passados.
+         */
         public async Task<IEnumerable<Demon>> GetByIds(int[] ids)
         {
             IQueryable<Demon> queryableDemons = _shinCacheTenseiContext.Demons
