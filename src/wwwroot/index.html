@@ -1,10 +1,79 @@
 ﻿<!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <title></title>
+    <style>
+        form select {
+            margin-bottom: 20px;
+        }
+        form input {
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
+
 <body>
-	<span>Teste</span>
+    <form method="GET" action="api/v1/demons/search">
+
+        <label for="weakness">Fraqueza</label><br>
+        <select id="weakness" name="WeakNatureId"><option></option></select><br>
+
+        <label for="resist">Resistência</label><br>
+        <select id="resist" name="ResistNatureId"><option></option></select><br>
+
+        <label for="demonRace">Raças</label><br>
+        <select id="demonRace" name="DemonRaceId"><option></option></select><br>
+
+        <label for="skill">Skill</label><br>
+        <select id="skill" name="SkillId"><option></option></select><br>
+
+        <label for="minimumLevel">Level mínimo</label><br>
+        <input type="number" id="minimumLevel" name="MinimumLevel" value="1" /><br>
+
+        <label for="maximumLevel">Level máximo</label><br>
+        <input type="number" id="maximumLevel" value="99" name="MaximumLevel"/><br>
+
+        <label for="containsThisTextInName">Contém no nome</label><br>
+        <input type="text" id="containsThisTextInName" name="ContainsThisTextInName"/><br>
+
+        <input type="hidden" name="Quantity" value="5">
+        <input type="submit" value="Pesquisar">
+
+    </form>
+
+    <script>
+        function popularMenu(jsonFiltros) {
+
+            var selects = {
+                "Nature": ["weakness", "resist"],
+                "DemonRace": ["demonRace"],
+                "Skill": ["skill"]
+            };
+
+            for (let i = 0; i < jsonFiltros.length; i++) {
+
+                for (let j = 0; j < selects[jsonFiltros[i].category].length; j++) {
+
+                    for (let k = 0; k < jsonFiltros[i].values.length; k++) {
+
+                        option = document.createElement("option");
+                        option.value = jsonFiltros[i].values[k].id;
+                        option.appendChild(document.createTextNode(jsonFiltros[i].values[k].value));
+                        document.getElementById(selects[jsonFiltros[i].category][j]).appendChild(option);
+
+                    }
+                }
+            }
+
+        }
+
+        console.log(fetch("/api/v1/filteroptions")
+            .then(response => response.json())
+            .then(data => popularMenu(data)));
+
+    </script>
+
 </body>
 </html>
