@@ -44,7 +44,17 @@
     </form>
 
     <script>
-        function popularMenu(jsonFiltros) {
+
+        popularMenus();
+
+        async function requisitarFiltrosMenus() {
+            let resposta = await fetch("/api/v1/filteroptions");
+            return await resposta.json();
+        }
+
+        async function popularMenus() {
+
+            let dados = await requisitarFiltrosMenus();
 
             var selects = {
                 "Nature": ["weakness", "resist"],
@@ -52,16 +62,16 @@
                 "Skill": ["skill"]
             };
 
-            for (let i = 0; i < jsonFiltros.length; i++) {
+            for (let i = 0; i < dados.length; i++) {
 
-                for (let j = 0; j < selects[jsonFiltros[i].category].length; j++) {
+                for (let j = 0; j < selects[dados[i].category].length; j++) {
 
-                    for (let k = 0; k < jsonFiltros[i].values.length; k++) {
+                    for (let k = 0; k < dados[i].values.length; k++) {
 
                         option = document.createElement("option");
-                        option.value = jsonFiltros[i].values[k].id;
-                        option.appendChild(document.createTextNode(jsonFiltros[i].values[k].value));
-                        document.getElementById(selects[jsonFiltros[i].category][j]).appendChild(option);
+                        option.value = dados[i].values[k].id;
+                        option.appendChild(document.createTextNode(dados[i].values[k].value));
+                        document.getElementById(selects[dados[i].category][j]).appendChild(option);
 
                     }
                 }
@@ -69,9 +79,7 @@
 
         }
 
-        console.log(fetch("/api/v1/filteroptions")
-            .then(response => response.json())
-            .then(data => popularMenu(data)));
+
 
     </script>
 
