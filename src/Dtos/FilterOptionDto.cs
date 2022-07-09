@@ -7,10 +7,10 @@ namespace ShinCacheTensei.Dtos
 {
     public class FilterOptionDto
     {
-        [JsonPropertyName("Id")]
+        [JsonPropertyName("id")]
         public int FilterId { get; set; }
 
-        [JsonPropertyName("Value")]
+        [JsonPropertyName("value")]
         public string FilterValue { get; set; }
 
         public FilterOptionDto(string filterValue, int filterId) {
