@@ -65,11 +65,11 @@ namespace ShinCacheTensei.Data.Repositories
                     Deixo registrado que tenho ciência disso.
                  */
 
-                ids = await query
-                    .SkipWhile(s => s.Id != demonIdListQueryParams.AfterId)
+                ids = await query.Select(d => d.Id).ToArrayAsync();
+                ids = ids
+                    .SkipWhile(s => s != demonIdListQueryParams.AfterId)
                     .Skip(1).Take(quantity)
-                    .Select(d => d.Id)
-                    .ToArrayAsync();
+                    .ToArray();
             }
             else
                 //Pega os primeiros que aparecerem, caso o AfterId seja nulo
