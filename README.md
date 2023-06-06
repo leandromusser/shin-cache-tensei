@@ -152,6 +152,12 @@ Realizando a mesma requisição:
 ```
 Observe a mesma mudança do cameFrom. Agora, o demon de id 5 está em cache de servidor.
 
+## Paginação
+
+A quantidade máxima de demons que são retornados está definida no appsettings.json. É possível usar paginação adicionando o parâmetro AfterId. 
+No caso abaixo, ele retornará 5 demons após o que tiver o id 6.
+
+/demons/search?MinimumLevel=40&Quantity=5&AfterId=6
 
 
 ## Algumas tecnologias, técnicas e padrões usados: 
@@ -164,6 +170,7 @@ Observe a mesma mudança do cameFrom. Agora, o demon de id 5 está em cache de s
 - Cache de memória com IMemoryCache
 - Entity Framework Core 5.0
 - Migrations
+- Paginação
 - Modelagem de dados
 - Git
 - GitHub
