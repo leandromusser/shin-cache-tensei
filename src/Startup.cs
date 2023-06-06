@@ -36,9 +36,11 @@ namespace ShinCacheTensei
         {
             services.AddMemoryCache();
 
+	    Console.WriteLine(_env.EnvironmentName);
             if (_env.IsDevelopment())
-                services.AddDbContext<ShinCacheTenseiContext>(options => options.UseSqlServer
-                (@"Server=(localdb)\mssqllocaldb;Database=ShinCacheTensei;Trusted_Connection=True"));
+                services.AddDbContext<ShinCacheTenseiContext>(options => 
+                	options.UseSqlite("Data Source=shincachetensei.db")
+                );
             else
             {
                 Environment.GetEnvironmentVariable("DATABASE_URL");
